@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "postinstall": "node ./scripts/install.js",
-    "start": "node ./server/index.js"
+    "start": "node ./server/index.js",
+    "build": "node ./scripts/build.js"
   },
   "devDependencies": {
     "chalk": "2.4.1"
