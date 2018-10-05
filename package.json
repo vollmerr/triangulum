@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "preinstall": "node ./scripts/install.js",
-    "start": "echo starting..."
+    "start": "node ./server/index.js"
   },
   "devDependencies": {
     "chalk": "2.4.1"
