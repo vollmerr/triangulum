@@ -38,7 +38,7 @@ server.post('/api/crawl', (request, reply) => {
 const start = async () => {
   try {
     const port = process.env.PORT || 5000;
-    await server.listen(port);
+    await server.listen(port, '0.0.0.0');
     server.log.info(`server listening on ${server.server.address().port}`);
   } catch (err) {
     server.log.error(err);
