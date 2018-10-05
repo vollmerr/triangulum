@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "node ./scripts/install.js",
+    "postinstall": "node ./scripts/install.js",
     "start": "node ./server/index.js"
   },
   "devDependencies": {
