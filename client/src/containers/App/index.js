@@ -1,11 +1,7 @@
 import React from 'react';
 
 // do some testing with semantic...
-import {
-  Button, Image, List, Segment,
-} from 'semantic-ui-react';
-
-const mmm = 'asd';
+import { List } from 'semantic-ui-react';
 
 const TestList = () => (
   <List divided relaxed>

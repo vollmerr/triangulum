@@ -2,17 +2,28 @@
   "name": "triangulum-client",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint:fix": "eslint --fix .",
+    "precommit": "lint-staged"
+  },
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.3",
     "semantic-ui-react": "0.82.5"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "enzyme": "3.6.0",
+    "enzyme-adapter-react-16": "1.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "lint-staged": "7.3.0"
   },
   "browserslist": [
     ">0.2%",
@@ -20,8 +31,25 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "enzyme": "3.6.0",
-    "enzyme-adapter-react-16": "1.5.0"
+  "lint-staged": {
+    "linters": {
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "package.json"
+    ]
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    }
   }
 }

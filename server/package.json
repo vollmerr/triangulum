@@ -7,10 +7,39 @@
     "start": "node index.js",
     "start:dev": "nodemon index.js",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint:fix": "eslint --fix .",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "fastify": "1.12.1",
     "ws": "6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "5.6.1",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "lint-staged": "7.3.0"
+  },
+  "lint-staged": {
+    "linters": {
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "package.json"
+    ]
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    }
   }
 }
