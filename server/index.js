@@ -1,3 +1,4 @@
+console.log('loaded server file......');
 const path = require('path');
 const cp = require('child_process');
 const fastify = require('fastify');
