@@ -1,11 +1,9 @@
-console.log('loaded server file......');
 const path = require('path');
 const cp = require('child_process');
 const fastify = require('fastify');
 const fastifyStatic = require('fastify-static');
 
 const server = fastify({ logger: true });
-const port = process.env.PORT || 3000;
 
 // setup plugins
 server.register(fastifyStatic, { root: path.join(__dirname, '../client/build') });
@@ -37,8 +35,15 @@ server.post('/api/crawl', (request, reply) => {
   }
 });
 
-// start API
-server.listen(port, (err, address) => {
-  if (err) throw err;
-  server.log.info(`server listening on ${address}`);
-});
+const start = async () => {
+  try {
+    const port = process.env.PORT || 5000;
+    await server.listen(port);
+    server.log.info(`server listening on ${server.server.address().port}`);
+  } catch (err) {
+    server.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
