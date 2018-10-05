@@ -1,25 +1,42 @@
 {
-  "name": "osu-triangulum",
+  "name": "triangulum",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-scripts": "2.0.3"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "preinstall": "node ./scripts/install.js",
+    "start": "echo starting...",
+    "lint:fix": "./node_modules/.bin/eslint --fix .",
+    "precommit": "cross-env lint-staged"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "lint-staged": {
+    "linters": {
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "package.json"
+    ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    }
+  },
+  "devDependencies": {
+    "dotenv": "6.0.0",
+    "eslint": "5.6.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "23.6.0",
+    "nodemon": "1.18.4"
+  }
 }

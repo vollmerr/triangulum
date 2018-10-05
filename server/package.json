@@ -1,0 +1,16 @@
+{
+  "name": "triangulum-server",
+  "version": "0.1.0",
+  "author": "triangulum",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "fastify": "1.12.1",
+    "ws": "6.0.0"
+  }
+}
