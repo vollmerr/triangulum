@@ -3,7 +3,7 @@ const utils = require('../utils');
 const crawlerStuff = async (options) => {
   // wait 1sec 10 times
   for (let i = 0; i < 10; i += 1) {
-    console.log('still crawling... pid: ', process.pid);
+    // console.log('still crawling... pid: ', process.pid);
     if (options.testError) {
       throw new Error('test errorz'); // test throwing an error
     }

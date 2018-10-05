@@ -18,7 +18,7 @@ server.get('/api/healthcheck', (request, reply) => reply.send(200));
 server.post('/api/crawl', (request, reply) => {
   let crawler;
   try {
-    crawler = cp.fork('./crawler/index.js');
+    crawler = cp.fork(path.join(__dirname, '/crawler/index.js'));
     crawler.send(request.body);
     crawler.on('message', (result) => {
       if (result.error) {
