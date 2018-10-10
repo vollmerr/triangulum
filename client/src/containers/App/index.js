@@ -1,38 +1,40 @@
 import React from 'react';
+import { Container } from 'semantic-ui-react';
+import { Route, withRouter } from 'react-router-dom';
 
-// do some testing with semantic...
-import { List } from 'semantic-ui-react';
+import CrawlerForm from '../CrawlerForm';
+import Graph from '../Graph';
 
-const TestList = () => (
-  <List divided relaxed>
-    <List.Item>
-      <List.Icon name='github' size='large' verticalAlign='middle' />
-      <List.Content>
-        <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
-        <List.Description as='a'>Updated 10 mins ago</List.Description>
-      </List.Content>
-    </List.Item>
-    <List.Item>
-      <List.Icon name='github' size='large' verticalAlign='middle' />
-      <List.Content>
-        <List.Header as='a'>Semantic-Org/Semantic-UI-Docs</List.Header>
-        <List.Description as='a'>Updated 22 mins ago</List.Description>
-      </List.Content>
-    </List.Item>
-    <List.Item>
-      <List.Icon name='github' size='large' verticalAlign='middle' />
-      <List.Content>
-        <List.Header as='a'>Semantic-Org/Semantic-UI-Meteor</List.Header>
-        <List.Description as='a'>TEST</List.Description>
-      </List.Content>
-    </List.Item>
-  </List>
-);
+// main application container, handles tranfering data to pages
+class App extends React.PureComponent {
+  state = {
+    graphData: {},
+  }
 
-const App = () => (
-  <div>
-    <TestList />
-  </div>
-);
+  onCrawlSuccess = (data) => {
+    const { history } = this.props;
+    this.setState({ graphData: data });
+    history.push('/graph');
+  }
 
-export default App;
+  render() {
+    const { graphData } = this.state;
+
+    const crawlerFormProps = {
+      onSuccess: this.onCrawlSuccess,
+    };
+
+    const graphProps = {
+      data: graphData,
+    };
+
+    return (
+      <Container text>
+        <Route exact path="/" component={() => <CrawlerForm {...crawlerFormProps} />} />
+        <Route path="/graph" component={() => <Graph {...graphProps} />} />
+      </Container>
+    );
+  }
+}
+
+export default withRouter(App);

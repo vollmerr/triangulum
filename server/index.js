@@ -2,11 +2,13 @@ const path = require('path');
 const cp = require('child_process');
 const fastify = require('fastify');
 const fastifyStatic = require('fastify-static');
+const fastifyCors = require('fastify-cors');
 
 const server = fastify({ logger: true });
 
 // setup plugins
 server.register(fastifyStatic, { root: path.join(__dirname, '../client/build') });
+server.register(fastifyCors);
 
 // serve client file
 server.get('/', (request, reply) => reply.sendFile('index.html'));
