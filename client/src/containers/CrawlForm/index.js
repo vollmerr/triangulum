@@ -1,5 +1,10 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import {
+  Dimmer,
+  Loader,
+  Button,
+  Form,
+} from 'semantic-ui-react';
 
 import schema from './schema';
 import withFormik from './withFormik';
@@ -7,8 +12,10 @@ import withFormik from './withFormik';
 import Field from '../../components/Form/Field';
 import ErrorMessage from '../../components/Form/ErrorMessage';
 
-// form for sending to crawler
-class CrawlerForm extends React.PureComponent {
+/**
+ * Form for sending data to the crawler
+ */
+class CrawlForm extends React.PureComponent {
   renderFields = () => (
     Object.keys(schema).map(field => (
       <Field key={field} formikProps={this.props} field={schema[field]} />
@@ -18,8 +25,7 @@ class CrawlerForm extends React.PureComponent {
   render() {
     const {
       handleSubmit,
-      // handleReset,
-      // isSubmitting,
+      isSubmitting,
     } = this.props;
 
     const submitProps = {
@@ -29,26 +35,24 @@ class CrawlerForm extends React.PureComponent {
       type: 'submit',
       color: 'violet',
       content: 'send',
-    };
-
-    const errorProps = {
-      schema,
-      ...this.props,
+      disabled: isSubmitting,
     };
 
     return (
       <div>
-        <Form size='large' onSubmit={handleSubmit}>
-          {
-            this.renderFields()
-          }
+        <Dimmer active={isSubmitting} inverted>
+          <Loader>Crawling the interwebs...</Loader>
+        </Dimmer>
+
+        <Form size={'large'} onSubmit={handleSubmit}>
+          {this.renderFields()}
           <Button {...submitProps} />
         </Form>
 
-        <ErrorMessage {...errorProps} />
+        <ErrorMessage schema={schema} {...this.props} />
       </div>
     );
   }
 }
 
-export default withFormik(CrawlerForm);
+export default withFormik(CrawlForm);

@@ -11,12 +11,14 @@ const Field = ({ formikProps, field }) => {
     handleBlur,
     setFieldValue,
     setFieldTouched,
+    isSubmitting,
   } = formikProps;
   const { name, options } = field;
 
   const props = {
     ...field,
     value: values[name],
+    disabled: isSubmitting,
     onChange: handleChange,
     onBlur: handleBlur,
     error: !!errors[name] && touched[name],

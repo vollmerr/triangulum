@@ -10,13 +10,13 @@ const ErrorMessage = (props) => {
     schema,
   } = props;
   const list = [];
-
+  // go through each field in schema and check if should display error
   Object.keys(schema).forEach((field) => {
     if (errors[field] && touched[field]) {
       list.push(errors[field]);
     }
   });
-
+  // has submission error
   if (status && status === 'submissionError') {
     list.push('Failed to Submit');
   }
