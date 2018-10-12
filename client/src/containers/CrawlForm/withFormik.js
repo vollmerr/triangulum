@@ -30,16 +30,19 @@ export const handleSubmit = async (values, bag) => {
 
   try {
     bag.setStatus(null);
+    bag.props.onRequest({ request: values });
     const res = await fetch(url, options);
-    const json = await res.json();
-    bag.props.onSuccess(json);
+    const response = await res.json();
+    bag.props.onSuccess({ response });
   } catch (err) {
+    bag.props.onFailure({ error: err });
     bag.setStatus('submissionError');
   } finally {
     bag.setSubmitting(false);
   }
 };
 
+// HOC for handling common form functionality
 export default withFormik({
   validationSchema,
   mapPropsToValues,

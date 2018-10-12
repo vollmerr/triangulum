@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
-import { Route, withRouter, Link } from 'react-router-dom';
+import { HashRouter, Route, Link } from 'react-router-dom';
 
 import CrawlForm from '../CrawlForm';
 import CrawlGraph from '../CrawlGraph';
 import CrawlHistory from '../CrawlHistory';
+
+import * as historyStorage from '../../utils/historyStorage';
 
 /**
  * main application container that handles:
@@ -22,17 +24,19 @@ class App extends React.PureComponent {
     data: {},
   }
 
-  onCrawlSuccess = (data) => {
-    const { history } = this.props;
-    this.setState({ data });
-    history.push('/graph');
+  componentDidMount() {
+    historyStorage.init();
   }
+
+  updateData = ({ data }) => {
+    this.setState({ data });
+  };
 
   render() {
     const { data } = this.state;
 
     const crawlerFormProps = {
-      onSuccess: this.onCrawlSuccess,
+      updateData: this.updateData,
     };
 
     const graphProps = {
@@ -40,25 +44,27 @@ class App extends React.PureComponent {
     };
 
     return (
-      <Container text>
-        <ul style={{ listStyleType: 'none', padding: 0 }}>
-          <li>
-            <Link to="/">home</Link>
-          </li>
-          <li>
-            <Link to="/graph">graph</Link>
-          </li>
-          <li>
-            <Link to="/history">history</Link>
-          </li>
-        </ul>
+      <HashRouter>
+        <Container text>
+          <ul style={{ listStyleType: 'none', padding: 0 }}>
+            <li>
+              <Link to="/">home</Link>
+            </li>
+            <li>
+              <Link to="/graph">graph</Link>
+            </li>
+            <li>
+              <Link to="/history">history</Link>
+            </li>
+          </ul>
 
-        <Route exact path="/" component={() => <CrawlForm {...crawlerFormProps} />} />
-        <Route path="/graph" component={() => <CrawlGraph {...graphProps} />} />
-        <Route path="/history" component={() => <CrawlHistory />} />
-      </Container>
+          <Route exact path="/" component={() => <CrawlForm {...crawlerFormProps} />} />
+          <Route path="/graph" component={() => <CrawlGraph {...graphProps} />} />
+          <Route path="/history" component={() => <CrawlHistory />} />
+        </Container>
+      </HashRouter>
     );
   }
 }
 
-export default withRouter(App);
+export default App;

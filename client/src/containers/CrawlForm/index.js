@@ -1,58 +1,48 @@
 import React from 'react';
-import {
-  Dimmer,
-  Loader,
-  Button,
-  Form,
-} from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 
-import schema from './schema';
-import withFormik from './withFormik';
+import FormikForm from './FormikForm';
 
-import Field from '../../components/Form/Field';
-import ErrorMessage from '../../components/Form/ErrorMessage';
+import * as historyStorage from '../../utils/historyStorage';
 
 /**
- * Form for sending data to the crawler
+ * Wrapper around actual form for crawler, as formik
+ * requires methods are passed as props
  */
 class CrawlForm extends React.PureComponent {
-  renderFields = () => (
-    Object.keys(schema).map(field => (
-      <Field key={field} formikProps={this.props} field={schema[field]} />
-    ))
-  )
+  state = {
+    id: null,
+  }
+
+  onRequest = ({ request }) => {
+    const id = historyStorage.newItem();
+    this.setState({ id });
+    historyStorage.updateItem({ id, request });
+  };
+
+  onSuccess = ({ response }) => {
+    const { history, updateData } = this.props;
+    const { id } = this.state;
+    updateData({ data: response });
+    historyStorage.updateItem({ id, response });
+    history.push('/graph');
+  }
+
+  onFailure = ({ error }) => {
+    const { id } = this.state;
+    historyStorage.updateItem({ id, error });
+  }
 
   render() {
-    const {
-      handleSubmit,
-      isSubmitting,
-    } = this.props;
-
-    const submitProps = {
-      fluid: true,
-      icon: 'send',
-      size: 'large',
-      type: 'submit',
-      color: 'violet',
-      content: 'send',
-      disabled: isSubmitting,
+    const formProps = {
+      onRequest: this.onRequest,
+      onSuccess: this.onSuccess,
     };
 
     return (
-      <div>
-        <Dimmer active={isSubmitting} inverted>
-          <Loader>Crawling the interwebs...</Loader>
-        </Dimmer>
-
-        <Form size={'large'} onSubmit={handleSubmit}>
-          {this.renderFields()}
-          <Button {...submitProps} />
-        </Form>
-
-        <ErrorMessage schema={schema} {...this.props} />
-      </div>
+      <FormikForm {...formProps} />
     );
   }
 }
 
-export default withFormik(CrawlForm);
+export default withRouter(CrawlForm);
