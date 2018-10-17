@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "fastify": "1.12.1",
+    "fastify-cors": "0.1.0",
     "fastify-static": "0.14.0",
     "ws": "6.0.0"
   },
