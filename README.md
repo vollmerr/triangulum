@@ -25,3 +25,8 @@ For a better development experience / to run with hot reload enabled:
 2. In a new terminal, start the client with `npm run start` from within the `/client` folder.
 
 Saving changes in either the client or server will now be reflected without reloading or restarting.
+
+### Testing
+For running tests for both the client and server with a coverage report, in the root folder run `npm run test`.
+
+For running continuous tests, that update each time a file is saved, in the client or server folder run `npm run test:watch`.
