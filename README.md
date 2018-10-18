@@ -1,6 +1,8 @@
 # Triangulum
-Heroku: https://osu-triangulum.herokuapp.com/
-Github: https://github.com/vollmerr/triangulum
+- Heroku: https://osu-triangulum.herokuapp.com/
+- Github: https://github.com/vollmerr/triangulum
+
+[![CircleCI](https://circleci.com/gh/vollmerr/triangulum/tree/master.svg?style=svg)](https://circleci.com/gh/vollmerr/triangulum/tree/master)
 
 ## About
 This project is the Triganulum Web Crawler. It is comprised of a react web UI and node API that crawls web pages in forked processes.
@@ -23,3 +25,8 @@ For a better development experience / to run with hot reload enabled:
 2. In a new terminal, start the client with `npm run start` from within the `/client` folder.
 
 Saving changes in either the client or server will now be reflected without reloading or restarting.
+
+### Testing
+For running tests for both the client and server with a coverage report, in the root folder run `npm run test`.
+
+For running continuous tests, that update each time a file is saved, in the client or server folder run `npm run test:watch`.

@@ -1,9 +1,10 @@
 const resolve = require('path').resolve;
 const cp = require('child_process');
 const os = require('os');
+const chalk = require('chalk');
 
 const clientPath = resolve(__dirname, '../client');
-console.log(`Building client\n`);
+console.log(`${chalk.magenta('Building client')}\n`);
 // npm binary based on OS
 const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
 // install folder
