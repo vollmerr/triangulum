@@ -40,6 +40,12 @@ describe('historyStorage', () => {
     expect(item.updated).toBeDefined(); // attached updated date
   });
 
+  it('should not override an existing history when initalizing', () => {
+    historyStorage.init();
+    item = historyStorage.getItem({ id: id1 });
+    expect(item.value.test).toBe('a');
+  });
+
   it('should reset to a stringified empty object', () => {
     historyStorage.reset();
     expect(localStorage.getItem('crawlHistory')).toEqual(JSON.stringify({}));

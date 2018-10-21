@@ -6,18 +6,30 @@ import * as historyStorage from '../../utils/historyStorage';
 import HistoryItems from './HistoryItems';
 
 /**
- * Placehodler for crawler history
+ * History of previous crawls made
  *
  * TODO:
- *  - make into list (semantic-ui styled)
- *  - reset functionality
+ *  - load graph on click / store entire result
  *  - display for mobile vs desktop
  *    - sidebar on desktop
  *    - own page on mobile
  */
 class CrawlHistory extends React.PureComponent {
-  state = {
-    items: historyStorage.getItems(),
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: {},
+    };
+  }
+
+  componentDidMount() {
+    this.loadItems();
+  }
+
+  loadItems = () => {
+    historyStorage.init();
+    const items = historyStorage.getItems();
+    this.setState({ items });
   }
 
   onReset = () => {

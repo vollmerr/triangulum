@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistoryItem should render correctly 1`] = `
+<ListItem>
+  <ListContent
+    floated="right"
+  >
+    <ListDescription>
+      2018-1-1 16:00:00
+    </ListDescription>
+  </ListContent>
+  <ListContent>
+    <ListHeader>
+      http://test.com
+    </ListHeader>
+    <ListDescription>
+      Type: bfs
+    </ListDescription>
+    <ListDescription>
+      Limit: 100
+    </ListDescription>
+    <ListDescription>
+      Keyword: test keyword
+    </ListDescription>
+  </ListContent>
+</ListItem>
+`;
