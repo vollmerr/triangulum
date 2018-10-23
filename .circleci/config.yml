@@ -26,6 +26,7 @@ jobs:
       - run:
           name: Setup Code Climate test-reporter
           command: |
+            mkdir -p tmp/
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
 
@@ -33,8 +34,11 @@ jobs:
           name: Run tests
           command: |
             npm run test
-            ./cc-test-reporter sum-coverage */coverage/coverage-final.json
-            ./cc-test-reporter upload-coverage
+            # combine all coverage files together and send report to codeclimate
+            ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.client.json client/coverage/lcov.info
+            ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.server.json server/coverage/lcov.info
+            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
 
       - run:
           name: Test building
