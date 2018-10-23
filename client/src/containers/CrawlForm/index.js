@@ -37,6 +37,7 @@ class CrawlForm extends React.PureComponent {
     const formProps = {
       onRequest: this.onRequest,
       onSuccess: this.onSuccess,
+      onFailure: this.onFailure,
     };
 
     return (
