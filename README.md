@@ -3,6 +3,8 @@
 - Github: https://github.com/vollmerr/triangulum
 
 [![CircleCI](https://circleci.com/gh/vollmerr/triangulum/tree/master.svg?style=svg)](https://circleci.com/gh/vollmerr/triangulum/tree/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/bbb4e414926034545da2/maintainability)](https://codeclimate.com/github/vollmerr/triangulum/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/bbb4e414926034545da2/test_coverage)](https://codeclimate.com/github/vollmerr/triangulum/test_coverage)
 
 ## About
 This project is the Triganulum Web Crawler. It is comprised of a react web UI and node API that crawls web pages in forked processes.
