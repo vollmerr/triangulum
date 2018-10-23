@@ -6,6 +6,7 @@ let item;
 // order of tests matter, updates localStorage as they are processed
 describe('historyStorage', () => {
   it('should initalize to a stringified empty object', () => {
+    localStorage.clear();
     historyStorage.init();
     expect(localStorage.getItem('crawlHistory')).toEqual(JSON.stringify({}));
   });
