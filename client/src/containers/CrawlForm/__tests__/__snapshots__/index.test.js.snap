@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CrawlForm should render correctly 1`] = `
+<WithFormik(FormikForm)
+  onFailure={[Function]}
+  onRequest={[Function]}
+  onSuccess={[Function]}
+/>
+`;

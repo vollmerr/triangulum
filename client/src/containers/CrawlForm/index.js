@@ -9,7 +9,7 @@ import * as historyStorage from '../../utils/historyStorage';
  * Wrapper around actual form for crawler, as formik
  * requires methods are passed as props
  */
-class CrawlForm extends React.PureComponent {
+export class CrawlForm extends React.PureComponent {
   state = {
     id: null,
   }

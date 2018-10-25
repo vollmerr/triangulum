@@ -15,7 +15,7 @@ import ErrorMessage from '../../components/Form/ErrorMessage';
 /**
  * Form to wrap with formik HOC
  */
-class FormikForm extends React.PureComponent {
+export class FormikForm extends React.PureComponent {
   renderFields = () => (
     Object.keys(schema).map(field => (
       <Field key={field} formikProps={this.props} field={schema[field]} />
