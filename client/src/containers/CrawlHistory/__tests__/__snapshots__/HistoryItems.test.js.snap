@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistoryItem should render correctly 1`] = `
+<List
+  divided={true}
+  verticalAlign="middle"
+>
+  <HistoryItem
+    k1="v1"
+    k2="v2"
+    key="id1"
+  />
+  <HistoryItem
+    k3="v3"
+    k4="v4"
+    key="id2"
+  />
+</List>
+`;

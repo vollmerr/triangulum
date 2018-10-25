@@ -6,6 +6,7 @@ let item;
 // order of tests matter, updates localStorage as they are processed
 describe('historyStorage', () => {
   it('should initalize to a stringified empty object', () => {
+    localStorage.clear();
     historyStorage.init();
     expect(localStorage.getItem('crawlHistory')).toEqual(JSON.stringify({}));
   });
@@ -38,6 +39,12 @@ describe('historyStorage', () => {
     expect(item.created).toBeDefined(); // didnt override
     expect(item.value.test).toBe('a'); // new value added
     expect(item.updated).toBeDefined(); // attached updated date
+  });
+
+  it('should not override an existing history when initalizing', () => {
+    historyStorage.init();
+    item = historyStorage.getItem({ id: id1 });
+    expect(item.value.test).toBe('a');
   });
 
   it('should reset to a stringified empty object', () => {
