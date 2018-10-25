@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormikForm should render correctly 1`] = `
+<FormField
+  disabled={false}
+  error={false}
+  name="k1"
+  onBlur={[Function]}
+  onChange={[Function]}
+  options={
+    Array [
+      Object {
+        "key": "o1",
+        "name": "k1",
+        "text": "option 1",
+        "value": "o1",
+      },
+      Object {
+        "key": "o2",
+        "name": "k1",
+        "text": "option 2",
+        "value": "o2",
+      },
+    ]
+  }
+  value="v1"
+/>
+`;

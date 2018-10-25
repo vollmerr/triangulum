@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormikForm should render correctly 1`] = `
+<Message
+  error={true}
+  header="There was some errors with your submission"
+  list={
+    Array [
+      "errTouch Error",
+    ]
+  }
+/>
+`;
