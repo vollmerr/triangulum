@@ -49,6 +49,7 @@
     ]
   },
   "jest": {
+    "resetMocks": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
       "!/node_modules/",
