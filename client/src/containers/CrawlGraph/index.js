@@ -12,7 +12,8 @@ import React from 'react';
  */
 const CrawlGraph = ({ data }) => (
   <div>
-    {`Graph goes here... ${JSON.stringify(data, null, 2)}`}
+    <p><a href={`${process.env.REACT_APP_URL}/graph`}>Temp link to graph</a></p>
+    <pre>{`Graph will go here... ${JSON.stringify(data, null, 2)}`}</pre>
   </div>
 );
 

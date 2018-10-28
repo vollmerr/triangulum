@@ -2,39 +2,40 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    
+
     <!-- load bootstrap -->
-    <link rel="stylesheet" 
+    <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"></link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    
-    <!-- load the d3.js library -->	
+
+    <!-- load the d3.js library -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    
+
     <!-- load local css -->
-    <link rel="stylesheet" href="styling.css"</link>
+    <link rel="stylesheet" href="/static/graph/styling.css"</link>
 </head>
 <body>
-    <div id="pageContainer">    
+    <div id="pageContainer">
         <br>
         <div id="buttonContainer">
-            <button type="button" class="btn btn-outline-primary left-btn" 
+            <button type="button" class="btn btn-outline-primary left-btn"
                 data-toggle="collapse" data-target="#infoContainer">Info</button>
-            <button type="button" class="btn btn-primary right-btn" 
+            <button id="backBtn" type="button" class="btn btn-outline-primary left-btn">Back</button>
+            <button type="button" class="btn btn-primary right-btn"
                 onclick ="showTargetPath(root)">Show Target Path</button>
-            <button type="button" class="btn btn-primary right-btn" 
+            <button type="button" class="btn btn-primary right-btn"
                 onclick="globalCollapse(root)">Collapse All</button>
-            <button type="button" class="btn btn-primary right-btn" 
+            <button type="button" class="btn btn-primary right-btn"
                 onclick="levelClick(root)">Show Next Level</button>
-        </div> 
+        </div>
         <div id="d3Container">
         </div>
         <div id="infoContainer" class="collapse">
-            <p>Click on nodes to expand the tree. Only nodes with a colored inside have 
+            <p>Click on nodes to expand the tree. Only nodes with a colored inside have
                 children.<br>Zoom with scrolling/double clicking. Drag with mouse to pan.<br>
-                Green nodes are sites along the target path. The large, red 
+                Green nodes are sites along the target path. The large, red
                 node is the site with the keyword.</p>
         </div>
         <div id="settingsContainer">
@@ -55,8 +56,11 @@
         </div>
         <br>
     </div>
-   
+
     <!-- load local js -->
-    <script src="d3methods.js"></script>    
+    <script src="/static/graph/d3methods.js"></script>
+    <script>
+      document.getElementById('backBtn').addEventListener('click', () => history.back());
+    </script>
 </body>
 </html>
