@@ -24,7 +24,10 @@
     "jest": "23.6.0",
     "lint-staged": "7.3.0",
     "nodemon": "1.18.4",
-    "supertest": "3.3.0"
+    "supertest": "3.3.0",
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.88.0",
+    "url-parse": "^1.4.3"
   },
   "lint-staged": {
     "linters": {
