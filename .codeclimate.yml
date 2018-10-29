@@ -14,3 +14,5 @@ exclude_patterns:
   - "node_modules/"
   - "docs/"
   - "scripts/"
+  - "client/src/index.js"
+  - "client/src/serviceWorker.js"
