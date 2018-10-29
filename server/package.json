@@ -12,9 +12,12 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "cheerio": "1.0.0-rc.2",
     "fastify": "1.12.1",
     "fastify-cors": "0.1.0",
     "fastify-static": "0.14.0",
+    "request": "2.88.0",
+    "url-parse": "1.4.3",
     "ws": "6.0.0"
   },
   "devDependencies": {
@@ -24,10 +27,7 @@
     "jest": "23.6.0",
     "lint-staged": "7.3.0",
     "nodemon": "1.18.4",
-    "supertest": "3.3.0",
-    "cheerio": "^1.0.0-rc.2",
-    "request": "^2.88.0",
-    "url-parse": "^1.4.3"
+    "supertest": "3.3.0"
   },
   "lint-staged": {
     "linters": {
