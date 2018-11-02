@@ -49,6 +49,13 @@
     ]
   },
   "jest": {
+    "resetMocks": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!/node_modules/",
+      "!src/index.js",
+      "!src/serviceWorker.js"
+    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]

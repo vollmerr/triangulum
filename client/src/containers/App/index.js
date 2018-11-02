@@ -1,12 +1,15 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
-import { HashRouter, Route, Link } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
+
+import * as historyStorage from '../../utils/historyStorage';
 
 import CrawlForm from '../CrawlForm';
 import CrawlGraph from '../CrawlGraph';
 import CrawlHistory from '../CrawlHistory';
 
-import * as historyStorage from '../../utils/historyStorage';
+import Header from './Header';
+
 
 /**
  * main application container that handles:
@@ -46,17 +49,7 @@ class App extends React.PureComponent {
     return (
       <HashRouter>
         <Container text>
-          <ul style={{ listStyleType: 'none', padding: 0 }}>
-            <li>
-              <Link to="/">home</Link>
-            </li>
-            <li>
-              <Link to="/graph">graph</Link>
-            </li>
-            <li>
-              <Link to="/history">history</Link>
-            </li>
-          </ul>
+          <Header />
 
           <Route exact path="/" component={() => <CrawlForm {...crawlerFormProps} />} />
           <Route path="/graph" component={() => <CrawlGraph {...graphProps} />} />

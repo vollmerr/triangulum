@@ -29,10 +29,6 @@ describe('CrawlForm', () => {
     id = wrapper.state('id');
   });
 
-  it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-  });
-
   describe('onRequest', () => {
     it('should add a new history item with the request', () => {
       expect(id).toBeDefined();
@@ -69,6 +65,10 @@ describe('CrawlForm', () => {
   });
 
   describe('render', () => {
+    it('should render correctly', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+
     it('should render a `FormikForm`', () => {
       expect(wrapper.find(FormikForm).length).toEqual(1);
     });

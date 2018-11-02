@@ -6,26 +6,54 @@ import * as historyStorage from '../../../utils/historyStorage';
 
 import CrawlHistory from '../index';
 
-jest.spyOn(historyStorage, 'init');
-
 let wrapper;
+let instance;
 describe('CrawlHistory', () => {
   beforeEach(() => {
     wrapper = shallow(<CrawlHistory />);
+    instance = wrapper.instance();
   });
 
-  it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  describe('componentDidMount', () => {
+    it('should load the history into state', () => {
+      instance.loadItems = jest.fn();
+      instance.componentDidMount();
+      expect(instance.loadItems).toBeCalled();
+    });
   });
 
-  it('should initalize the history on mount if it doesn`t exist', () => {
-    expect(historyStorage.init).toBeCalled();
+  describe('loadItems', () => {
+    it('should initalize the history and load into state', () => {
+      instance.loadItems();
+      expect(instance.state.items).toEqual({});
+    });
   });
 
-  it('should reset the history when the reset button is pressed', () => {
-    historyStorage.newItem();
-    wrapper.find(Button).simulate('click');
-    const items = historyStorage.getItems();
-    expect(items).toEqual({});
+  describe('onReset', () => {
+    it('should reset the history', () => {
+      historyStorage.newItem();
+      instance.setState({ items: { k1: 'v1' } });
+      instance.onReset();
+      expect(instance.state.items).toEqual({});
+    });
+
+    it('should force a re-render', () => {
+      instance.forceUpdate = jest.fn();
+      instance.onReset();
+      expect(instance.forceUpdate).toHaveBeenCalled();
+    });
+  });
+
+  describe('render', () => {
+    it('should render correctly', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('should reset the history when the reset button is pressed', () => {
+      historyStorage.newItem();
+      wrapper.find(Button).simulate('click');
+      const items = historyStorage.getItems();
+      expect(items).toEqual({});
+    });
   });
 });
