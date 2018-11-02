@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CrawlHistory should render correctly 1`] = `
+exports[`CrawlHistory render should render correctly 1`] = `
 <div>
   <HistoryItems
     items={Object {}}
