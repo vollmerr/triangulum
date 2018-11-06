@@ -1,9 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import FormikForm from './FormikForm';
-
 import * as historyStorage from '../../utils/historyStorage';
+
+import FormikForm from './FormikForm';
 
 /**
  * Wrapper around actual form for crawler, as formik

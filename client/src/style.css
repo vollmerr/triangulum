@@ -1,0 +1,24 @@
+#root,
+#mobile-view,
+#desktop-view {
+  height: 100vh;
+}
+
+#mobile-view form,
+.page {
+  height: calc(100vh - 75px);
+}
+
+#mobile-view .submitBtn {
+  position: absolute;
+  bottom: 0;
+}
+
+.page {
+  position: relative;
+}
+
+.ui.form .error.message {
+  display: block;
+}
+

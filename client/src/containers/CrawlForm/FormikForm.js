@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Container,
   Dimmer,
   Loader,
   Button,
@@ -29,9 +30,9 @@ export class FormikForm extends React.PureComponent {
     } = this.props;
 
     const submitProps = {
+      className: 'submitBtn',
       fluid: true,
       icon: 'send',
-      size: 'large',
       type: 'submit',
       color: 'violet',
       content: 'Send',
@@ -39,18 +40,18 @@ export class FormikForm extends React.PureComponent {
     };
 
     return (
-      <div>
+      <Container text className={'page'}>
         <Dimmer active={isSubmitting} inverted>
           <Loader>Crawling the interwebs...</Loader>
         </Dimmer>
 
-        <Form size={'large'} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           {this.renderFields()}
+          <ErrorMessage schema={schema} {...this.props} />
+
           <Button {...submitProps} />
         </Form>
-
-        <ErrorMessage schema={schema} {...this.props} />
-      </div>
+      </Container>
     );
   }
 }

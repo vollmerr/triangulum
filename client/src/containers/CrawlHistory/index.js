@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Container, Button } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 
 import * as historyStorage from '../../utils/historyStorage';
 
@@ -7,12 +8,6 @@ import HistoryItems from './HistoryItems';
 
 /**
  * History of previous crawls made
- *
- * TODO:
- *  - load graph on click / store entire result
- *  - display for mobile vs desktop
- *    - sidebar on desktop
- *    - own page on mobile
  */
 class CrawlHistory extends React.PureComponent {
   constructor(props) {
@@ -39,28 +34,35 @@ class CrawlHistory extends React.PureComponent {
     this.forceUpdate();
   }
 
+  onClick = (id) => {
+    const { history, updateData } = this.props;
+    const data = historyStorage.getItem({ id });
+    updateData({ data });
+    history.push('/graph');
+  }
+
   render() {
     const { items } = this.state;
+    const showResetBtn = !!Object.keys(items).length;
 
     const resetProps = {
+      className: 'submitBtn',
       fluid: true,
       basic: true,
       icon: 'trash',
-      size: 'large',
       type: 'button',
       color: 'red',
       content: 'Reset',
       onClick: this.onReset,
-      disabled: !Object.keys(items).length,
     };
 
     return (
-      <div>
-        <HistoryItems items={items} />
-        <Button {...resetProps} />
-      </div>
+      <Container text className={'page'}>
+        <HistoryItems items={items} onClick={this.onClick} />
+        {showResetBtn && <Button {...resetProps} />}
+      </Container>
     );
   }
 }
 
-export default CrawlHistory;
+export default withRouter(CrawlHistory);
