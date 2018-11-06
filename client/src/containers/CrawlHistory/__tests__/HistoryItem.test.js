@@ -22,7 +22,6 @@ describe('HistoryItem', () => {
 
   it('should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
-    console.log('wrapper: ', wrapper.debug());
   });
 
   it('should render not a keyword if none provided', () => {
