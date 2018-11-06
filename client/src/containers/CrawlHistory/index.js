@@ -9,7 +9,7 @@ import HistoryItems from './HistoryItems';
 /**
  * History of previous crawls made
  */
-class CrawlHistory extends React.PureComponent {
+export class CrawlHistory extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

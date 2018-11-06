@@ -1,22 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CrawlHistory render should render correctly 1`] = `
-<div>
+<Container
+  className="page"
+  text={true}
+>
   <HistoryItems
     items={Object {}}
-  />
-  <Button
-    as="button"
-    basic={true}
-    color="red"
-    content="Reset"
-    disabled={true}
-    fluid={true}
-    icon="trash"
     onClick={[Function]}
-    role="button"
-    size="large"
-    type="button"
   />
-</div>
+</Container>
 `;
