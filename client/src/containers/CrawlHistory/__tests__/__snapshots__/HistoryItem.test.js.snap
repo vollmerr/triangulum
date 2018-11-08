@@ -6,7 +6,7 @@ exports[`HistoryItem should render correctly 1`] = `
     floated="right"
   >
     <ListDescription>
-      2018-1-1 16:00:00
+      Tue, 02 Jan 2018 00:00:00 GMT
     </ListDescription>
   </ListContent>
   <ListContent>

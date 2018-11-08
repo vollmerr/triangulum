@@ -2,23 +2,43 @@
 
 exports[`App render should render correctly 1`] = `
 <HashRouter>
-  <Container
-    text={true}
-  >
-    <Header />
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/"
-    />
-    <Route
-      component={[Function]}
-      path="/graph"
-    />
-    <Route
-      component={[Function]}
-      path="/history"
-    />
-  </Container>
+  <div>
+    <withRouter(MobileContainer)>
+      <Route
+        component={[Function]}
+        exact={true}
+        key="form"
+        path="/"
+      />
+      <Route
+        component={[Function]}
+        key="graph"
+        path="/graph"
+      />
+      <Route
+        component={[Function]}
+        key="history"
+        path="/history"
+      />
+    </withRouter(MobileContainer)>
+    <withRouter(DesktopContainer)>
+      <Route
+        component={[Function]}
+        exact={true}
+        key="form"
+        path="/"
+      />
+      <Route
+        component={[Function]}
+        key="graph"
+        path="/graph"
+      />
+      <Route
+        component={[Function]}
+        key="history"
+        path="/history"
+      />
+    </withRouter(DesktopContainer)>
+  </div>
 </HashRouter>
 `;

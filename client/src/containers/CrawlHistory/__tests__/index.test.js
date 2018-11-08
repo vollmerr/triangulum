@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react';
 
 import * as historyStorage from '../../../utils/historyStorage';
 
-import CrawlHistory from '../index';
+import { CrawlHistory } from '../index';
 
 let wrapper;
 let instance;
@@ -32,7 +32,7 @@ describe('CrawlHistory', () => {
   describe('onReset', () => {
     it('should reset the history', () => {
       historyStorage.newItem();
-      instance.setState({ items: { k1: 'v1' } });
+      instance.loadItems();
       instance.onReset();
       expect(instance.state.items).toEqual({});
     });
@@ -51,6 +51,7 @@ describe('CrawlHistory', () => {
 
     it('should reset the history when the reset button is pressed', () => {
       historyStorage.newItem();
+      instance.loadItems();
       wrapper.find(Button).simulate('click');
       const items = historyStorage.getItems();
       expect(items).toEqual({});

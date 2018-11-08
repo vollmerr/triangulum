@@ -16,17 +16,11 @@ const runTests = ({ type }) => {
   return cp.spawn(npmCmd, ['run', 'test'], { env, cwd, stdio: 'inherit' });
 };
 
-
-// run client tests, then server tests
-// circleci does not wait, so this lovely callback promise is needed
-(async () => {
-  await new Promise((res, rej) => (
-    runTests({ type: 'client' })
-      .on('exit', () => (
-        runTests({ type: 'server' })
-          .on('exit', res)
-          .on('error', rej)
-      ))
-      .on('error', rej)
-  ));
-})();
+const client = runTests({ type: 'client' });
+client.on('error', process.exit);
+client.on('exit', (code) => {
+  if (code) process.exit(code);
+  const server = runTests({ type: 'server' });
+  server.on('error', process.exit);
+  server.on('exit', process.exit)
+});

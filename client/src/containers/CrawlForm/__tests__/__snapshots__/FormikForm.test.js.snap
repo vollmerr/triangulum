@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FormikForm should render correctly 1`] = `
-<div>
+<Container
+  className="page"
+  text={true}
+>
   <Dimmer
     active={false}
     inverted={true}
@@ -13,7 +16,6 @@ exports[`FormikForm should render correctly 1`] = `
   <Form
     as="form"
     onSubmit={[MockFunction]}
-    size="large"
   >
     <Field
       field={
@@ -94,60 +96,60 @@ exports[`FormikForm should render correctly 1`] = `
       }
       key="keyword"
     />
+    <ErrorMessage
+      handleSubmit={[MockFunction]}
+      isSubmitting={false}
+      schema={
+        Object {
+          "keyword": Object {
+            "control": [Function],
+            "label": "Keyword (optional)",
+            "name": "keyword",
+            "placeholder": "Word to search for",
+          },
+          "limit": Object {
+            "control": [Function],
+            "label": "Limit",
+            "name": "limit",
+            "placeholder": "Maximum Depth Limit",
+            "type": "number",
+          },
+          "type": Object {
+            "control": [Function],
+            "label": "Search Type",
+            "name": "type",
+            "options": Array [
+              Object {
+                "text": "Breadth-first",
+                "value": "bfs",
+              },
+              Object {
+                "text": "Depth-first",
+                "value": "dfs",
+              },
+            ],
+            "placeholder": "Select a Type",
+          },
+          "url": Object {
+            "control": [Function],
+            "label": "Start URL",
+            "name": "url",
+            "placeholder": "http://example.com",
+          },
+        }
+      }
+    />
     <Button
       as="button"
+      className="submitBtn"
       color="violet"
       content="Send"
       disabled={false}
       fluid={true}
       icon="send"
       role="button"
-      size="large"
       type="submit"
     />
   </Form>
-  <ErrorMessage
-    handleSubmit={[MockFunction]}
-    isSubmitting={false}
-    schema={
-      Object {
-        "keyword": Object {
-          "control": [Function],
-          "label": "Keyword (optional)",
-          "name": "keyword",
-          "placeholder": "Word to search for",
-        },
-        "limit": Object {
-          "control": [Function],
-          "label": "Limit",
-          "name": "limit",
-          "placeholder": "Maximum Depth Limit",
-          "type": "number",
-        },
-        "type": Object {
-          "control": [Function],
-          "label": "Search Type",
-          "name": "type",
-          "options": Array [
-            Object {
-              "text": "Breadth-first",
-              "value": "bfs",
-            },
-            Object {
-              "text": "Depth-first",
-              "value": "dfs",
-            },
-          ],
-          "placeholder": "Select a Type",
-        },
-        "url": Object {
-          "control": [Function],
-          "label": "Start URL",
-          "name": "url",
-          "placeholder": "http://example.com",
-        },
-      }
-    }
-  />
-</div>
+</Container>
 `;
