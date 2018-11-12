@@ -15,27 +15,23 @@ import './style.css';
  * targetFound - string representing if target was found
  */
 export default class SearchSettings extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {...this.props}
-  }
 
   render() {
-    if(this.state.targetedSearch) {
+    if(this.props.targetedSearch) {
       return (
         <div id="settingsContainer">
           <table>
             <tr>
               <th>Starting URL:</th>
-              <td>{this.state.url}</td>
+              <td>{this.props.url}</td>
             </tr>
             <tr>
               <th>Search Type (Hop Limit):</th>
-              <td>{this.state.type} ({this.state.hopLimit})</td>
+              <td>{this.props.type} ({this.props.hopLimit})</td>
             </tr>
             <tr>
               <th>Keyword (Status):</th>
-              <td>{this.state.target} ({this.state.targetFound})</td>
+              <td>{this.props.target} ({this.props.targetFound})</td>
             </tr>
           </table>
         </div>
@@ -47,11 +43,11 @@ export default class SearchSettings extends Component {
           <table>
             <tr>
               <th>Starting URL:</th>
-              <td>{this.state.url}</td>
+              <td>{this.props.url}</td>
             </tr>
             <tr>
               <th>Search Type (Hop Limit):</th>
-              <td>{this.state.type} ({this.state.hopLimit})</td>
+              <td>{this.props.type} ({this.props.hopLimit})</td>
             </tr>
           </table>
         </div>

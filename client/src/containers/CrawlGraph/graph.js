@@ -4,62 +4,6 @@ import stratify from './utils.js';
 import InfoAccordion from './infoAccordion.js';
 import SearchSettings from './searchSettings.js';
 
-const data = 
-{
-    "url": "google.com",
-    "target": "word",
-    "type": "bfs", 
-    "hopLimit": 10,
-    "nodes": 
-    [
-        {"url": "google.com", "title": "Google", "parent":"", "targetFound":0},
-        {"url": "facebook.com", "title": "Facebook", "parent": "google.com", 
-            "targetFound":0},
-        {"url": "youtube.com", "title": "Youtube", "parent": "google.com", 
-            "targetFound":0},
-        {"url": "twitter.com", "title": "Twitter", "parent": "google.com", 
-            "targetFound":0},
-        {"url": "gmail.com", "title": "Gmail", "parent": "google.com", "targetFound":0},
-        {"url": "http://canvas.oregonstate.edu/","title": "Canvas OSU", 
-            "parent": "google.com", "targetFound":0},
-        {"url": "www.espn.com", "title": "ESPN", "parent": "facebook.com", 
-            "targetFound":0},
-        {"url": "www.nsa.gov", "title": "National Security Agency", "parent": 
-            "facebook.com", "targetFound":0},
-        {"url": "www.youtube.com/feed/trending", "title": "Trending - Youtube", 
-            "parent": "youtube.com", "targetFound":0},
-        {"url": "www.youtube.com/feed/subscriptions", "title": "Subscriptions - Youtube",
-            "parent": "youtube.com", "targetFound":0},
-        {"url": "www.youtube.com/feed/history", "title": "History - Youtube", "parent": 
-            "youtube.com", "targetFound":0},
-        {"url": "twitter.com/i/moments", "title": "Today - Twitter Moments", "parent": 
-            "twitter.com", "targetFound":0},
-        {"url": "twitter.com/i/notifications", "title": "Twitter/Notifcations", "parent":
-            "twitter.com", "targetFound":0},
-        {"url": "www.google.com/maps", "title": "Google Maps", "parent": "google.com", 
-            "targetFound":0},
-        {"url": "news.google.com", "title": "Google News", "parent": "gmail.com", 
-                "targetFound":0},
-        {"url": "contacts.google.com/", "title": "Google Contacts", "parent": 
-            "gmail.com", "targetFound":0},
-        {"url": "drive.google.com/drive/", "title": "Google Drive", "parent": 
-            "gmail.com", "targetFound":0},
-        {"url": "calendar.google.com/calendar/", "title": "Google Calendar", "parent": 
-            "gmail.com", "targetFound":0},
-        {"url": "https://osu-cs.slack.com/", "title": "OSU Slack", "parent": 
-            "http://canvas.oregonstate.edu/", "targetFound":0},
-        {"url": "www.espn.com/fantasy/football/", "title": "Fantasy Football", 
-            "parent": "www.espn.com", "targetFound":0},
-        {"url": "www.espn.com/nba/", "title": "ESPN NBA", "parent": "www.espn.com", 
-            "targetFound":0},
-        {"url": "https://www.youtube.com/watch?v=6F1iqcxvfBc", "title": 
-            "NBA Youngboy - Temporary Time - Youtube", "parent": 
-            "www.youtube.com/feed/trending", "targetFound":0},
-        {"url": "https://www.youtube.com/watch?v=-DVkz4LLu8w", "title": 
-            "Matty Mathesons Ultimate Burger Recipe", "parent": 
-            "www.youtube.com/feed/subscriptions", "targetFound":1}
-    ]
-};
 /**
  * Graph Component
  *
@@ -79,7 +23,7 @@ class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      hierarchy: stratify(data.nodes),
+      hierarchy: stratify(this.props.data.nodes),
       translate: {x: 0, y: 0},
       initialDepth: 0,
       separation: {siblings: 0.45, nonSiblings: 0.6},
@@ -142,8 +86,8 @@ class Graph extends React.Component {
    *    - targetFound: 'FOUND' or 'NOT FOUND' depending on results of search
    */
   render() {
-    const targetedSearch = (data.target) ? 1 : 0;
-    const targetFound = (data.nodes[data.nodes.length - 1].targetFound) ? 'FOUND' : 'NOT FOUND';
+    const targetedSearch = (this.props.data.target) ? 1 : 0;
+    const targetFound = (this.props.data.nodes[this.props.data.nodes.length - 1].targetFound) ? 'FOUND' : 'NOT FOUND';
 
     return (
       <div>
@@ -187,10 +131,10 @@ class Graph extends React.Component {
           }}
         >
           <SearchSettings
-            url={data.url}
-            target={data.target}
-            type={data.type}
-            hopLimit={data.hopLimit}
+            url={this.props.data.url}
+            target={this.props.data.target}
+            type={this.props.data.type}
+            hopLimit={this.props.data.hopLimit}
             targetedSearch={targetedSearch}
             targetFound={targetFound}
           />
