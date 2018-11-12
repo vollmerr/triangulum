@@ -1,4 +1,5 @@
 import React from 'react';
+import Graph from './graph.js';
 
 /**
  * Placeholder for crawler visual graph
@@ -12,8 +13,7 @@ import React from 'react';
  */
 const CrawlGraph = ({ data }) => (
   <div>
-    <p><a href={`${process.env.REACT_APP_URL}/graph`}>Temp link to graph</a></p>
-    <pre>{`Graph will go here... ${JSON.stringify(data, null, 2)}`}</pre>
+    <Graph />
   </div>
 );
 

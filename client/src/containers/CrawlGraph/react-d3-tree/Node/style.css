@@ -1,0 +1,27 @@
+/*.nodeBase {
+  cursor: pointer;
+  fill: #777;
+  stroke: #000;
+  stroke-width: 2;
+}
+
+.leafNodeBase {
+  cursor: pointer;
+  fill: transparent;
+  stroke: #000;
+  stroke-width: 2;
+}*/
+
+.nodeNameBase {
+  fill: #000;
+  stroke: #000;
+  font-size: 13px;
+  stroke-width: 0.5;
+}
+
+.nodeAttributesBase {
+  fill: #777;
+  stroke: #777;
+  stroke-width: 1;
+  font-size: smaller;
+}
