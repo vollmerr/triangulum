@@ -3,7 +3,7 @@ import { List, Header } from 'semantic-ui-react';
 
 import HistoryItem from './HistoryItem';
 
-const HistoryItems = ({ items }) => {
+const HistoryItems = ({ items, onClick }) => {
   const keys = Object.keys(items);
 
   // No history message
@@ -22,10 +22,10 @@ const HistoryItems = ({ items }) => {
   }
 
   return (
-    <List divided verticalAlign='middle'>
+    <List selection divided verticalAlign='middle'>
       {
         keys.map(x => (
-          <HistoryItem key={x} {...items[x]} />
+          <HistoryItem key={x} {...items[x]} onClick={onClick} />
         ))
       }
     </List>

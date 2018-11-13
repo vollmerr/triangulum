@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileContainer render should render correctly 1`] = `
+<Responsive
+  getWidth={[Function]}
+  id="mobile-view"
+  maxWidth={767}
+>
+  <SidebarPushable>
+    <Sidebar
+      animation="overlay"
+      as={[Function]}
+      direction="right"
+      duration={500}
+      vertical={true}
+    >
+      <Links
+        onClick={[Function]}
+        path="/test-path"
+      />
+    </Sidebar>
+    <SidebarPusher
+      onClick={[Function]}
+    >
+      <Segment
+        color="violet"
+        inverted={true}
+        style={
+          Object {
+            "margin": "0 0 1.5em 0",
+            "minHeight": 40,
+            "padding": "1em 0em",
+          }
+        }
+        textAlign="center"
+        vertical={true}
+      >
+        <Container>
+          <Menu
+            fixed="top"
+            inverted={true}
+            pointing={true}
+            secondary={true}
+          >
+            <MenuItem
+              as={[Function]}
+              icon="sitemap"
+              style={
+                Object {
+                  "transform": "rotate(0.5turn)",
+                }
+              }
+              to="/"
+            />
+            <MenuItem
+              onClick={[Function]}
+              position="right"
+            >
+              <Icon
+                as="i"
+                name="sidebar"
+              />
+            </MenuItem>
+          </Menu>
+        </Container>
+      </Segment>
+      <Child />
+    </SidebarPusher>
+  </SidebarPushable>
+</Responsive>
+`;
