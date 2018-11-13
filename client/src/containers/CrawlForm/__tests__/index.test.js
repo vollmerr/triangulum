@@ -42,7 +42,8 @@ describe('CrawlForm', () => {
     });
 
     it('should update the graphs data', () => {
-      expect(props.updateData).toBeCalledWith({ data: response });
+      const data = historyStorage.getItem({ id });
+      expect(props.updateData).toBeCalledWith({ data });
     });
 
     it('should update the history with the response', () => {

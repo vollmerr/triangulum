@@ -23,8 +23,9 @@ export class CrawlForm extends React.PureComponent {
   onSuccess = ({ response }) => {
     const { history, updateData } = this.props;
     const { id } = this.state;
-    updateData({ data: response });
     historyStorage.updateItem({ id, response });
+    const data = historyStorage.getItem({ id });
+    updateData({ data });
     history.push('/graph');
   }
 

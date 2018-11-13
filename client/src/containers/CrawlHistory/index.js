@@ -34,7 +34,7 @@ export class CrawlHistory extends React.PureComponent {
     this.forceUpdate();
   }
 
-  onClick = (id) => {
+  onClick = (event, { id }) => {
     const { history, updateData } = this.props;
     const data = historyStorage.getItem({ id });
     updateData({ data });
