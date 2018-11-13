@@ -23,7 +23,7 @@ class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      hierarchy: stratify(this.props.data.nodes),
+      hierarchy: stratify(this.props.data.response.nodes),
       translate: {x: 0, y: 0},
       initialDepth: 0,
       separation: {siblings: 0.45, nonSiblings: 0.6},
@@ -86,8 +86,8 @@ class Graph extends React.Component {
    *    - targetFound: 'FOUND' or 'NOT FOUND' depending on results of search
    */
   render() {
-    const targetedSearch = (this.props.data.target) ? 1 : 0;
-    const targetFound = (this.props.data.nodes[this.props.data.nodes.length - 1].targetFound) ? 'FOUND' : 'NOT FOUND';
+    const targetedSearch = (this.props.data.response.target) ? 1 : 0;
+    const targetFound = (this.props.data.response.nodes[this.props.data.response.nodes.length - 1].targetFound) ? 'FOUND' : 'NOT FOUND';
 
     return (
       <div>
@@ -131,10 +131,10 @@ class Graph extends React.Component {
           }}
         >
           <SearchSettings
-            url={this.props.data.url}
-            target={this.props.data.target}
-            type={this.props.data.type}
-            hopLimit={this.props.data.hopLimit}
+            url={this.props.data.response.url}
+            target={this.props.data.response.target}
+            type={this.props.data.response.type}
+            hopLimit={this.props.data.response.hopLimit}
             targetedSearch={targetedSearch}
             targetFound={targetFound}
           />
