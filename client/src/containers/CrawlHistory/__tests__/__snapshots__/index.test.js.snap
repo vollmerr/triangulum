@@ -9,11 +9,11 @@ exports[`CrawlHistory render should render correctly 1`] = `
     items={
       Object {
         "0bcea83c-a7ea-428e-85db-d448f2b777a6": Object {
-          "created": "2000-01-01T08:00:00.000Z",
+          "created": "2000-01-01T00:00:00.000Z",
           "id": "0bcea83c-a7ea-428e-85db-d448f2b777a6",
         },
         "ec776b0c-b50e-45b9-a763-7aefa78034f8": Object {
-          "created": "2000-01-01T08:00:00.000Z",
+          "created": "2000-01-01T00:00:00.000Z",
           "id": "ec776b0c-b50e-45b9-a763-7aefa78034f8",
         },
       }
