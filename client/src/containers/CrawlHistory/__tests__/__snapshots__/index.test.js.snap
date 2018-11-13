@@ -8,13 +8,13 @@ exports[`CrawlHistory render should render correctly 1`] = `
   <HistoryItems
     items={
       Object {
-        "6672e9a0-7074-4f54-ad97-e8c85eb4eb3a": Object {
+        "0bcea83c-a7ea-428e-85db-d448f2b777a6": Object {
           "created": "2000-01-01T08:00:00.000Z",
-          "id": "6672e9a0-7074-4f54-ad97-e8c85eb4eb3a",
+          "id": "0bcea83c-a7ea-428e-85db-d448f2b777a6",
         },
-        "fb612a7e-225b-4a59-a432-f68fcd899e22": Object {
+        "ec776b0c-b50e-45b9-a763-7aefa78034f8": Object {
           "created": "2000-01-01T08:00:00.000Z",
-          "id": "fb612a7e-225b-4a59-a432-f68fcd899e22",
+          "id": "ec776b0c-b50e-45b9-a763-7aefa78034f8",
         },
       }
     }

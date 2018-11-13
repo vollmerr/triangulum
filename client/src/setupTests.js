@@ -11,5 +11,6 @@ MockDate.set('1/1/2000');
 // make uuids return deterministic value
 jest.mock('uuid/v4', () => {
   const faker = require('faker'); // eslint-disable-line
+  faker.seed(1337);
   return () => faker.random.uuid();
 });
