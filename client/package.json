@@ -5,8 +5,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage",
-    "test:watch": "react-scripts test",
+    "test": "react-scripts test --coverage --runInBand",
+    "test:watch": "react-scripts test --runInBand",
     "eject": "react-scripts eject",
     "lint:fix": "eslint --fix .",
     "precommit": "lint-staged"
