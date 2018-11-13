@@ -6,8 +6,31 @@ exports[`CrawlHistory render should render correctly 1`] = `
   text={true}
 >
   <HistoryItems
-    items={Object {}}
+    items={
+      Object {
+        "6672e9a0-7074-4f54-ad97-e8c85eb4eb3a": Object {
+          "created": "2000-01-01T08:00:00.000Z",
+          "id": "6672e9a0-7074-4f54-ad97-e8c85eb4eb3a",
+        },
+        "fb612a7e-225b-4a59-a432-f68fcd899e22": Object {
+          "created": "2000-01-01T08:00:00.000Z",
+          "id": "fb612a7e-225b-4a59-a432-f68fcd899e22",
+        },
+      }
+    }
     onClick={[Function]}
+  />
+  <Button
+    as="button"
+    basic={true}
+    className="submitBtn"
+    color="red"
+    content="Reset"
+    fluid={true}
+    icon="trash"
+    onClick={[Function]}
+    role="button"
+    type="button"
   />
 </Container>
 `;

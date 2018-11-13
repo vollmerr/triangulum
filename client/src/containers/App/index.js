@@ -18,7 +18,13 @@ class App extends React.PureComponent {
   }
 
   componentDidMount() {
+    this.initHistory();
+  }
+
+  initHistory = () => {
     historyStorage.init();
+    const data = historyStorage.getCurrent();
+    this.setState({ data });
   }
 
   getRoutes = () => {
@@ -39,6 +45,7 @@ class App extends React.PureComponent {
   }
 
   updateData = ({ data }) => {
+    historyStorage.setCurrent({ id: data.id });
     this.setState({ data });
   };
 
