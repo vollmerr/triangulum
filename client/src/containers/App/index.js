@@ -14,7 +14,11 @@ import DesktopContainer from './DesktopContainer';
  */
 class App extends React.PureComponent {
   state = {
-    data: {},
+    data: {
+      response: {
+        nodes: [],
+      },
+    },
   }
 
   componentDidMount() {
