@@ -86,8 +86,9 @@ class Graph extends React.Component {
    *    - targetFound: 'FOUND' or 'NOT FOUND' depending on results of search
    */
   render() {
-    const targetedSearch = (this.props.data.response.target) ? 1 : 0;
-    const targetFound = (this.props.data.response.nodes[this.props.data.response.nodes.length - 1].targetFound) ? 'FOUND' : 'NOT FOUND';
+    const { response } = this.props.data;
+    const targetedSearch = (response.target) ? 1 : 0;
+    const targetFound = (response.nodes[response.nodes.length - 1].targetFound) ? 'FOUND' : 'NOT FOUND';
 
     return (
       <div>
@@ -131,10 +132,10 @@ class Graph extends React.Component {
           }}
         >
           <SearchSettings
-            url={this.props.data.response.url}
-            target={this.props.data.response.target}
-            type={this.props.data.response.type}
-            hopLimit={this.props.data.response.hopLimit}
+            url={response.url}
+            target={response.target}
+            type={response.type}
+            hopLimit={response.hopLimit}
             targetedSearch={targetedSearch}
             targetFound={targetFound}
           />
