@@ -10,14 +10,14 @@ import {
 
 import routes from './routes';
 
-const Logo = () => (
+export const Logo = () => (
   <Menu.Item as={Link} to={'/'}>
     <Icon name={'sitemap'} style={{ transform: 'rotate(0.5turn)' }} />
     <span>riangulum</span>
   </Menu.Item>
 );
 
-const Links = ({ path }) => (
+export const Links = ({ path }) => (
   routes.map(route => (
     <Menu.Item
       key={route.key}
@@ -30,7 +30,7 @@ const Links = ({ path }) => (
   ))
 );
 
-class DesktopContainer extends Component {
+export class DesktopContainer extends Component {
   state = {}
 
   render() {

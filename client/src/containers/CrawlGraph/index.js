@@ -13,7 +13,7 @@ import Graph from './graph.js';
  */
 const CrawlGraph = ({ data }) => (
   <div>
-    <Graph />
+    <Graph data={data} />
   </div>
 );
 

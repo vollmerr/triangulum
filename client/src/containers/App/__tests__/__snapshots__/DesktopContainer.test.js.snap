@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DesktopContainer render should render correctly 1`] = `
+<Responsive
+  getWidth={[Function]}
+  id="desktop-view"
+  minWidth={768}
+>
+  <Segment
+    color="violet"
+    inverted={true}
+    style={
+      Object {
+        "margin": "0 0 2em 0",
+        "minHeight": 40,
+        "padding": "1em 0em",
+      }
+    }
+    textAlign="center"
+    vertical={true}
+  >
+    <Container>
+      <Menu
+        color="violet"
+        fixed="top"
+        inverted={true}
+        pointing={true}
+        secondary={true}
+      >
+        <Logo />
+        <MenuItem
+          position="right"
+        />
+        <Links
+          path="/test-path"
+        />
+      </Menu>
+    </Container>
+  </Segment>
+  <Child />
+</Responsive>
+`;
+
+exports[`Logo should render correctly 1`] = `
+<MenuItem
+  as={[Function]}
+  to="/"
+>
+  <Icon
+    as="i"
+    name="sitemap"
+    style={
+      Object {
+        "transform": "rotate(0.5turn)",
+      }
+    }
+  />
+  <span>
+    riangulum
+  </span>
+</MenuItem>
+`;

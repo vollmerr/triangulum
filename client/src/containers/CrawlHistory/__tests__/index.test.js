@@ -6,12 +6,21 @@ import * as historyStorage from '../../../utils/historyStorage';
 
 import { CrawlHistory } from '../index';
 
+const props = {
+  updateData: jest.fn(),
+  history: {
+    push: jest.fn(),
+  },
+};
+
 let wrapper;
 let instance;
+let id;
 describe('CrawlHistory', () => {
   beforeEach(() => {
-    wrapper = shallow(<CrawlHistory />);
+    wrapper = shallow(<CrawlHistory {...props} />);
     instance = wrapper.instance();
+    id = historyStorage.newItem();
   });
 
   describe('componentDidMount', () => {
@@ -24,6 +33,7 @@ describe('CrawlHistory', () => {
 
   describe('loadItems', () => {
     it('should initalize the history and load into state', () => {
+      localStorage.clear();
       instance.loadItems();
       expect(instance.state.items).toEqual({});
     });
@@ -31,7 +41,6 @@ describe('CrawlHistory', () => {
 
   describe('onReset', () => {
     it('should reset the history', () => {
-      historyStorage.newItem();
       instance.loadItems();
       instance.onReset();
       expect(instance.state.items).toEqual({});
@@ -41,6 +50,19 @@ describe('CrawlHistory', () => {
       instance.forceUpdate = jest.fn();
       instance.onReset();
       expect(instance.forceUpdate).toHaveBeenCalled();
+    });
+  });
+
+  describe('onClick', () => {
+    it('should update the graphs data', () => {
+      instance.onClick(null, { id });
+      const data = historyStorage.getItem({ id });
+      expect(props.updateData).toBeCalledWith({ data });
+    });
+
+    it('should redirect to the graph page', () => {
+      instance.onClick(null, { id });
+      expect(props.history.push).toBeCalledWith('/graph');
     });
   });
 

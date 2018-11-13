@@ -11,7 +11,7 @@ import {
 
 import routes from './routes';
 
-const Links = ({ path, onClick }) => (
+export const Links = ({ path, onClick }) => (
   routes.map(route => (
     <Menu.Item
       key={route.key}
@@ -25,7 +25,7 @@ const Links = ({ path, onClick }) => (
   ))
 );
 
-class MobileContainer extends Component {
+export class MobileContainer extends Component {
   state = {}
 
   closeMenu = () => {

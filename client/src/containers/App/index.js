@@ -14,11 +14,21 @@ import DesktopContainer from './DesktopContainer';
  */
 class App extends React.PureComponent {
   state = {
-    data: {},
+    data: {
+      response: {
+        nodes: [],
+      },
+    },
   }
 
   componentDidMount() {
+    this.initHistory();
+  }
+
+  initHistory = () => {
     historyStorage.init();
+    const data = historyStorage.getCurrent();
+    this.setState({ data });
   }
 
   getRoutes = () => {
@@ -39,6 +49,7 @@ class App extends React.PureComponent {
   }
 
   updateData = ({ data }) => {
+    historyStorage.setCurrent({ id: data.id });
     this.setState({ data });
   };
 

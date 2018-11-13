@@ -3,6 +3,7 @@
 exports[`HistoryItem should render correctly 1`] = `
 <List
   divided={true}
+  selection={true}
   verticalAlign="middle"
 >
   <HistoryItem
