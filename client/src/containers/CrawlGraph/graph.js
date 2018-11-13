@@ -1,5 +1,5 @@
 import React from 'react';
-import Tree from './react-d3-tree';
+import Tree from './react-d3-tree-modified';
 import stratify from './utils.js';
 import InfoAccordion from './infoAccordion.js';
 import SearchSettings from './searchSettings.js';
@@ -7,22 +7,22 @@ import SearchSettings from './searchSettings.js';
 /**
  * Graph Component
  *
- * Renders the entire crawl graph, including information on how to use, the graph itself, 
- * and search parameters. 
+ * Renders the entire crawl graph, including information on how to use, the graph itself,
+ * and search parameters.
  *
- * The graph is created using the react-d3-tree utility, an open source react component 
+ * The graph is created using the react-d3-tree utility, an open source react component
  * that uses d3 methods to create interactive tree graphs. The version in this project
  * is slightly modified so that labels can act as hyperlinks and have mouseover event
- * handlers. 
+ * handlers.
  * https://github.com/bkrem/react-d3-tree
- * 
- * data is passed as props, which contains url, target, type, hopLimit, and nodes fields. 
+ *
+ * data is passed as props, which contains url, target, type, hopLimit, and nodes fields.
  */
 class Graph extends React.Component {
-   
+
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       hierarchy: stratify(this.props.data.response.nodes),
       translate: {x: 0, y: 0},
       initialDepth: 0,
@@ -32,11 +32,11 @@ class Graph extends React.Component {
           fill: 'none',
           strokeWidth: '2px',
           stroke: 'LightGray',
-        },  
+        },
       },
       textLayout: {
-        textAnchor: "start", 
-        y: 0, 
+        textAnchor: "start",
+        y: 0,
         transform: undefined,
       },
       width: 0,
@@ -45,7 +45,7 @@ class Graph extends React.Component {
     }
   }
 
-  // Following window size methods adapted from: 
+  // Following window size methods adapted from:
   // https://stackoverflow.com/questions/36862334/get-viewport-window-height-in-reactjs
   componentDidMount = () => {
     this.updateWindowDimensions();
@@ -57,20 +57,20 @@ class Graph extends React.Component {
   }
 
   updateWindowDimensions = () => {
-    this.setState({ 
-      width: String(0.8 * window.innerWidth) + 'px', 
+    this.setState({
+      width: String(0.8 * window.innerWidth) + 'px',
       height: String(0.7 * window.innerHeight) + 'px',
       depthFactor: 0.175 * window.innerWidth,
-      translate: {x: 0.03 * window.innerWidth, y: 0.35* window.innerHeight} 
+      translate: {x: 0.03 * window.innerWidth, y: 0.35* window.innerHeight}
     });
   }
 
   /**
    * Renders InfoAccordion, Tree (the graph), and Search Settings components
    * InfoAccordion - no passed props
-   * Tree 
+   * Tree
    *    - hierarchy data: data.nodes after being proccessed into hierarchical format
-   *    - styling params as specified by react-d3-tree 
+   *    - styling params as specified by react-d3-tree
    *      - translate: positions root node at middle of chart at initial render
    *      - initialDepth: only displays root node at initial render
    *      - separation: specifies space between children and non-children nodes
@@ -92,26 +92,26 @@ class Graph extends React.Component {
 
     return (
       <div>
-        <div 
-          id='infoAccordionWrapper' 
+        <div
+          id='infoAccordionWrapper'
           style={{
-            width: this.state.width, 
+            width: this.state.width,
             margin: 'auto'
           }}
         >
           <InfoAccordion />
         </div>
-        <div 
-          id='treeWrapper' 
+        <div
+          id='treeWrapper'
           style={{
-            width: this.state.width, 
+            width: this.state.width,
             height: this.state.height,
-            border: '3px solid #6435C8', 
+            border: '3px solid #6435C8',
             margin: 'auto'
           }}
         >
-          <Tree 
-            data={this.state.hierarchy} 
+          <Tree
+            data={this.state.hierarchy}
             translate={this.state.translate}
             initialDepth={this.state.initialDepth}
             separation={this.state.separation}
@@ -124,10 +124,10 @@ class Graph extends React.Component {
           style={{height: '10px'}}
         >
         </div>
-          <div 
-          id='searchSettingsWrapper' 
+          <div
+          id='searchSettingsWrapper'
           style={{
-            width: this.state.width, 
+            width: this.state.width,
             margin: 'auto'
           }}
         >
