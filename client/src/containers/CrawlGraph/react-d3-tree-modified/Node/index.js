@@ -110,6 +110,13 @@ export default class Node extends React.Component {
     this.applyTransform(transform, transitionDuration, 0, done);
   }
 
+  /**
+   * MODIFIED
+   *
+   * Changed render() grouping. Instead of passing onclick to group of node and label elements,
+   * instead pass it only to node. This way clicking on node solely controls collapsing,
+   * while clicking on lable solely controls opening url in new tab.
+   */
   render() {
     const { nodeData, nodeSize, nodeLabelComponent, allowForeignObjects, styles } = this.props;
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
@@ -122,11 +129,14 @@ export default class Node extends React.Component {
         style={this.state.initialStyle}
         className={nodeData._children ? 'nodeBase' : 'leafNodeBase'}
         transform={this.state.transform}
-        onClick={this.handleClick}
         onMouseOver={this.handleOnMouseOver}
         onMouseOut={this.handleOnMouseOut}
       >
+        <g
+          onClick={this.handleClick}
+        >
         {this.renderNodeElement(nodeStyle)}
+        </g>
 
         {allowForeignObjects && nodeLabelComponent ? (
           <ForeignObjectElement nodeData={nodeData} nodeSize={nodeSize} {...nodeLabelComponent} />
