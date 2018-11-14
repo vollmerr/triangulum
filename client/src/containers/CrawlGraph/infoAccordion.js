@@ -36,7 +36,7 @@ export default class InfoAccordion extends Component {
           <p id="infoText"> 
             Click on nodes to expand the tree. Only nodes with a colored inside have children.<br />
             Click the node label to open the site in a new tab. Mouse over label to show url and expand (if applicable).<br />
-            Zoom with scrolling/double clicking. Drag with mouse to pan.<br />
+            Zoom with scrolling. Drag with mouse to pan.<br />
             For targeted searches, green nodes are sites along the target path. 
             The large, red node is the site with the keyword.
           </p>
