@@ -1,0 +1,15 @@
+/*
+    Triangulum
+    CSS file for CrawlGraph
+*/
+
+#infoText {
+    padding-left: 7px;
+}
+
+th, td {
+    padding-right: 15px;
+    padding-bottom: 6px;
+    text-align: left;
+    font-size: 18px;
+}

@@ -16,3 +16,4 @@ exclude_patterns:
   - "scripts/"
   - "client/src/index.js"
   - "client/src/serviceWorker.js"
+  - "client/src/containers/CrawlGraph/react-d3-tree-modified/"
