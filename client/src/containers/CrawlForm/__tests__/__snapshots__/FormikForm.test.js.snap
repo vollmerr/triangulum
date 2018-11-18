@@ -18,6 +18,7 @@ exports[`FormikForm should render correctly 1`] = `
     onSubmit={[MockFunction]}
   >
     <Field
+      data-cy="field-url"
       field={
         Object {
           "control": [Function],
@@ -35,6 +36,7 @@ exports[`FormikForm should render correctly 1`] = `
       key="url"
     />
     <Field
+      data-cy="field-type"
       field={
         Object {
           "control": [Function],
@@ -62,6 +64,7 @@ exports[`FormikForm should render correctly 1`] = `
       key="type"
     />
     <Field
+      data-cy="field-limit"
       field={
         Object {
           "control": [Function],
@@ -80,6 +83,7 @@ exports[`FormikForm should render correctly 1`] = `
       key="limit"
     />
     <Field
+      data-cy="field-keyword"
       field={
         Object {
           "control": [Function],
@@ -144,6 +148,7 @@ exports[`FormikForm should render correctly 1`] = `
       className="submitBtn"
       color="violet"
       content="Send"
+      data-cy="button-submit"
       disabled={false}
       fluid={true}
       icon="send"

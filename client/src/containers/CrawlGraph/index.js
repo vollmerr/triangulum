@@ -1,20 +1,17 @@
 import React from 'react';
-import Graph from './graph.js';
+import Graph from './graph';
 
 /**
- * Placeholder for crawler visual graph
+ * Crawler visual graph
  *
  * 'data' gets populated in parent App container
  *  when successful response from crawler form submit.
- *
- * TODO:
- *   - display on single page for mobile
- *   - display on page with history sidebar + form above in desktop
  */
-const CrawlGraph = ({ data }) => (
-  <div>
-    <Graph data={data} />
-  </div>
-);
+const CrawlGraph = ({ data }) => {
+  if (data.response && data.response.nodes.length) {
+    return <Graph data={data} />;
+  }
+  return null;
+};
 
 export default CrawlGraph;

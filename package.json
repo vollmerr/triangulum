@@ -7,9 +7,12 @@
     "start": "node ./server/index.js",
     "build": "node ./scripts/build.js",
     "test": "node ./scripts/test.js",
+    "e2e": "node ./scripts/e2e.js run",
+    "e2e:watch": "node ./scripts/e2e.js open",
     "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
-    "chalk": "2.4.1"
+    "chalk": "2.4.1",
+    "cypress": "3.1.1"
   }
 }

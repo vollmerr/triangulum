@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "fastify": "1.13.0",
+    "fastify-static": "0.14.0"
+  }
+}
