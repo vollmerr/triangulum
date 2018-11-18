@@ -35,19 +35,26 @@ Cypress.Commands.add('selectOption', (dataCy, text) => {
 
 Cypress.Commands.add('getCrawl', (body) => {
   const testUrl = Cypress.env('testUrl');
+  const request = {
+    url: testUrl,
+    type: 'bfs',
+    limit: 1,
+    keyword: 'test',
+    ...body,
+  };
+
   return cy.request({
     url: '/api/crawl',
     method: 'POST',
-    body: JSON.stringify({
-      url: testUrl,
-      type: 'bfs',
-      limit: 1,
-      keyword: 'test',
-      ...body,
-    }),
+    body: JSON.stringify(request),
     headers: {
       'Content-Type': 'application/json',
     },
   })
-  .then(res => JSON.parse(res.body));
+  .then(res => ({
+    request,
+    response: JSON.parse(res.body),
+    created: new Date('1969-01-01'),
+    updated: new Date('3000-08-22'),
+  }));
 })

@@ -57,6 +57,7 @@ describe('form', () => {
 
   it('renders correctly at all viewports', () => {
     cy.viewport('macbook-15').wait(300);
+    cy.screenshot('form-desktop');
     cy.viewport('macbook-13').wait(300);
     cy.viewport('macbook-11').wait(300);
     cy.viewport('ipad-2').wait(300);
@@ -66,6 +67,7 @@ describe('form', () => {
     cy.viewport('iphone-6+').wait(300);
     cy.viewport('iphone-6+', 'landscape').wait(300);
     cy.viewport('iphone-6').wait(300);
+    cy.screenshot('form-mobile');
     cy.viewport('iphone-6', 'landscape').wait(300);
     cy.viewport('iphone-5').wait(300);
     cy.viewport('iphone-5', 'landscape').wait(300);
