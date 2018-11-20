@@ -12,8 +12,6 @@ server.register(fastifyCors);
 
 // serve client file
 server.get('/', (request, reply) => reply.sendFile('index.html'));
-// server static graph for now...
-server.get('/graph', (request, reply) => reply.sendFile('static/graph/graph.html'));
 
 // health check for making sure still running
 server.get('/api/healthcheck', (request, reply) => reply.send(200));

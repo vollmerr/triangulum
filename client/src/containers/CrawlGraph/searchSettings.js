@@ -21,18 +21,20 @@ export default class SearchSettings extends Component {
       return (
         <div id="settingsContainer">
           <table>
-            <tr>
-              <th>Starting URL:</th>
-              <td>{this.props.url}</td>
-            </tr>
-            <tr>
-              <th>Search Type (Hop Limit):</th>
-              <td>{this.props.type} ({this.props.hopLimit})</td>
-            </tr>
-            <tr>
-              <th>Keyword (Status):</th>
-              <td>{this.props.target} ({this.props.targetFound})</td>
-            </tr>
+            <tbody>  
+              <tr>
+                <th>Starting URL:</th>
+                <td>{this.props.url}</td>
+              </tr>
+              <tr>
+                <th>Search Type (Hop Limit):</th>
+                <td>{this.props.type} ({this.props.hopLimit})</td>
+              </tr>
+              <tr>
+                <th>Keyword (Status):</th>
+                <td>{this.props.target} ({this.props.targetFound})</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       );
@@ -41,14 +43,16 @@ export default class SearchSettings extends Component {
       return (
         <div id="settingsContainer">
           <table>
-            <tr>
-              <th>Starting URL:</th>
-              <td>{this.props.url}</td>
-            </tr>
-            <tr>
-              <th>Search Type (Hop Limit):</th>
-              <td>{this.props.type} ({this.props.hopLimit})</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th>Starting URL:</th>
+                <td>{this.props.url}</td>
+              </tr>
+              <tr>
+                <th>Search Type (Hop Limit):</th>
+                <td>{this.props.type} ({this.props.hopLimit})</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       );

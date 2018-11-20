@@ -68,7 +68,7 @@ export default function stratify(nodes) {
     }
     else {
       arr.push({ 
-        name: node.url,
+        name: "No Title",
         data: {
           url: node.url, 
           targetPath: node.targetPath,
