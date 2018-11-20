@@ -15,25 +15,27 @@ export default class SvgTextElement extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      fullLabel: this.props.name,
-      exceedsMaxLabelLength: this.checkLabelLength(this.props.name),
-      shortenedLabel: this.trimLabel(this.props.name),
-      activeLabel: this.assignLabel(this.props.name),
+      fullTitle: this.props.name,
+      fullUrl: this.props.nodeData.data.url,
+      exceedsMaxTitleLength: this.checkTitleLength(this.props.name),
+      shortenedTitle: this.trimTitle(this.props.name),
+      activeTitle: this.assignTitle(this.props.name),
+      activeUrl: null,
     }
   }
 
   // Assigns bool if node name is greater than max length 
-  checkLabelLength = (name) => {
+  checkTitleLength = (name) => {
     return (name.length > 15) ? 1 : 0;
   }
 
   // Assigns trimmed label if node name is greater than max length
-  trimLabel = (name) => {
+  trimTitle = (name) => {
     return (name.length > 15) ? (name.slice(0, 14) + "...") : null;
   }
   
   // Assigns initial label if node name is greater than max length
-  assignLabel = (name) => {
+  assignTitle = (name) => {
     return (name.length > 15) ? (name.slice(0, 14) + "...") : name.concat("");
   }
 
@@ -47,18 +49,30 @@ export default class SvgTextElement extends React.PureComponent {
     this.contractLabel();
   }
 
-  // Reassigns active label to full label 
+  // Reassigns active label to full label and shows url
   // setState() triggers re-render
   expandLabel = () => {
-    if (this.state.exceedsMaxLabelLength) 
-      this.setState({ activeLabel: this.state.fullLabel.concat("") });
+    if (this.state.exceedsMaxTitleLength) {
+      this.setState({ 
+        activeTitle: this.state.fullTitle.concat(""),
+        activeUrl: this.state.fullUrl.concat(""),
+      });
+    }
+    else
+      this.setState({ activeUrl: this.state.fullUrl.concat("")});
   }
 
-  // Reassigns active label to shortened label
+  // Reassigns active label to shortened label and removes url
   // setState() triggers re-render
   contractLabel = () => {
-    if (this.state.exceedsMaxLabelLength)
-      this.setState({ activeLabel: this.state.shortenedLabel.concat("") });
+    if (this.state.exceedsMaxTitleLength) {
+      this.setState({ 
+        activeTitle: this.state.shortenedTitle.concat(""),
+        activeUrl: null,
+      });
+    }
+    else
+      this.setState({ activeUrl: null });
   }
     
   /**
@@ -98,7 +112,17 @@ export default class SvgTextElement extends React.PureComponent {
             transform={textLayout.transform}
             dy=".35em"
           >            
-            {this.state.activeLabel}
+            {this.state.activeTitle}
+          </text>
+          <text
+            className="nodeUrlBase"
+            textAnchor={textLayout.textAnchor}
+            x={textLayout.x}
+            y={15}
+            transform={textLayout.transform}
+            dy=".35em"
+          >            
+            {this.state.activeUrl}
           </text>
         </g>
       </a>

@@ -19,9 +19,9 @@
   stroke-width: 0.5;
 }
 
-.nodeAttributesBase {
-  fill: #777;
-  stroke: #777;
-  stroke-width: 1;
-  font-size: smaller;
+.nodeUrlBase {
+  fill: #000;
+  stroke: #000;
+  font-size: 11px;
+  stroke-width: 0.2;
 }
