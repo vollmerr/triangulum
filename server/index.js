@@ -37,7 +37,7 @@ server.post('/api/crawl', (request, reply) => {
   }
 });
 
-const start = async () => {
+server.start = async () => {
   try {
     const port = process.env.PORT || 5000;
     await server.listen(port, '0.0.0.0');
@@ -49,7 +49,7 @@ const start = async () => {
 };
 
 if (require.main === module) {
-  start();
+  server.start();
 }
 
 module.exports = server;

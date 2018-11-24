@@ -27,6 +27,7 @@ const field = {
 const props = {
   formikProps,
   field,
+  'data-cy': 'field-test',
 };
 
 let wrapper;

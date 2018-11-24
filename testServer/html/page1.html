@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page 1 Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h1>Page 1 Header</h1>
+  <p>other stuff on page...</p>
+  <img src="https://via.placeholder.com/728x90.png?text=This+Should+Not+Render" title="unrendered image"/>
+  <a href="/page2_a.html" id="page2a">link to 2 a</a>
+  <a href="#" id="page2b">link to 2 b (dynamically populated)</a>
+  <a href="#" id="page1">link to hash</a>
+  <a href="/bad-link.html" id="page1">bad link</a>
+  <script>
+    document.getElementById('page2b').addEventListener('onClick', () => {
+      window.location.href = '/page2b.html';
+    });
+  </script>
+</body>
+</html>

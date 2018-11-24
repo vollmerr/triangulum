@@ -25,6 +25,7 @@ const ErrorMessage = (props) => {
     list,
     error: true,
     header: 'There was some errors with your submission',
+    'data-cy': 'message-error',
   };
 
   return list.length ? <Message {...messageProps} /> : null;

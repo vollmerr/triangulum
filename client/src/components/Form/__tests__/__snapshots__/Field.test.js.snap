@@ -2,6 +2,7 @@
 
 exports[`FormikForm should render correctly 1`] = `
 <FormField
+  data-cy="field-test"
   disabled={false}
   error={false}
   name="k1"

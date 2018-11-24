@@ -2,7 +2,7 @@ import React from 'react';
 import { Form } from 'semantic-ui-react';
 
 // maps formik props to semantic-ui field
-const Field = ({ formikProps, field }) => {
+const Field = ({ formikProps, field, ...rest }) => {
   const {
     values,
     touched,
@@ -22,6 +22,7 @@ const Field = ({ formikProps, field }) => {
     onChange: handleChange,
     onBlur: handleBlur,
     error: !!errors[name] && touched[name],
+    ...rest,
   };
 
   // handle fields with multiple values (select, etc)

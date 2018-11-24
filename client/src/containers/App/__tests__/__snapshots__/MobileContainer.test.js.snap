@@ -58,6 +58,7 @@ exports[`MobileContainer render should render correctly 1`] = `
             >
               <Icon
                 as="i"
+                data-cy="button-menu"
                 name="sidebar"
               />
             </MenuItem>

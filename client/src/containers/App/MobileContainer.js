@@ -71,7 +71,7 @@ export class MobileContainer extends Component {
                     to={'/'}
                   />
                   <Menu.Item onClick={this.toggleMenu} position='right'>
-                    <Icon name='sidebar' />
+                    <Icon name='sidebar' data-cy='button-menu' />
                   </Menu.Item>
                 </Menu>
               </Container>

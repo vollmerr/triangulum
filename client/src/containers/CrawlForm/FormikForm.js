@@ -19,7 +19,12 @@ import ErrorMessage from '../../components/Form/ErrorMessage';
 export class FormikForm extends React.PureComponent {
   renderFields = () => (
     Object.keys(schema).map(field => (
-      <Field key={field} formikProps={this.props} field={schema[field]} />
+      <Field
+        key={field}
+        formikProps={this.props}
+        field={schema[field]}
+        data-cy={`field-${field}`}
+      />
     ))
   )
 
@@ -37,12 +42,13 @@ export class FormikForm extends React.PureComponent {
       color: 'violet',
       content: 'Send',
       disabled: isSubmitting,
+      'data-cy': 'button-submit',
     };
 
     return (
       <Container text className={'page'}>
         <Dimmer active={isSubmitting} inverted>
-          <Loader>Crawling the interwebs...</Loader>
+          <Loader data-cy='loader'>Crawling the interwebs...</Loader>
         </Dimmer>
 
         <Form onSubmit={handleSubmit}>
