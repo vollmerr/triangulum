@@ -11,23 +11,23 @@ async function bfsCrawl(options) {
   const MAX_DEPTH = options.hopLimit;
   const target = options.target;
 
-  let Links = [];
+  let theLinks = [];
   let queue = [];
   let outputNodes = [];
   queue.push({url,parent});
 
-  let graphData = {};
-  graphData = options;
+  //let graphData = {};
+  //graphData = options;
 
   console.log(`Entering the MAX_DEPTH while loop`);
 
   for(i=0; i<MAX_DEPTH; i++) {
-    Links[i] = queue;
+    theLinks[i] = queue;
     if(i>0){
-      queue = await queueCreator(Links,i);
+      queue = await buildQueue(theLinks,i);
     }
     console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
-    currentNodes = await traverseQueue(queue, target);
+    currentNodes = await walkQueue(queue, target);
 
     // console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
     for(k=0;k<currentNodes.nodes.length;k++){ // pushing links present in current url
@@ -66,26 +66,26 @@ async function clean_the_nodes(linkQ) {
   return cleanedNodes;
 }  // end clean_the_node function
 
-async function queueCreator(Links, i) {
+async function buildQueue(theLinks, i) {
   queue = [];
-  let currentURL = Links[i].url;
-  for(j=0; j<Links[i].length;j++){
-    console.log(`The Links is ${util.inspect(Links[i][j],false,null,true)}`);
-    console.log(`The currentURL is ${util.inspect(Links[i][j].url,false,null,true)}`);
-    // console.log(`Pushing links of ${Links[i][j]} to the queue`);
-    // console.log(`Pushing Links ${util.inspect(Links[i][j],false,null,true)}`);
-    // let response = await theFetch(Links[i][j]);
-    let url_host = urlParse.parse(Links[i][j].url, true);
+  let currentURL = theLinks[i].url;
+  for(j=0; j<theLinks[i].length;j++){
+    console.log(`The theLinks is ${util.inspect(theLinks[i][j],false,null,true)}`);
+    console.log(`The currentURL is ${util.inspect(theLinks[i][j].url,false,null,true)}`);
+    // console.log(`Pushing links of ${theLinks[i][j]} to the queue`);
+    // console.log(`Pushing theLinks ${util.inspect(theLinks[i][j],false,null,true)}`);
+    // let response = await theFetch(theLinks[i][j]);
+    let url_host = urlParse.parse(theLinks[i][j].url, true);
     console.log(`The url host protocol is ${url_host.protocol}`);
     console.log(`The url host hostname is ${url_host.hostname}`);
     currentURL = url_host.protocol + '//' + url_host.hostname;
     let html = await theFetch(currentURL);
-    // let currentLinks = await getLinks(Links[i][j],response);
+    // let currentLinks = await getLinks(theLinks[i][j],response);
     // let currentLinks = await getLinks(currentURL, response);
     let currentLinks = [];
     try {
       const $ = cheerio.load(html);
-      console.log("**********Finding Links*************");
+      console.log("**********Finding theLinks*************");
       $("a[href^='http']").each(function() {
         theurl = $(this).attr('href');
         // foundTitle = $('head > title').text();
@@ -99,7 +99,7 @@ async function queueCreator(Links, i) {
     }
     console.log(`The currentLinks list is ${util.inspect(currentLinks,false,null,true)}`);
     for(k=0; k<currentLinks.length;k++){
-      queue[queue.length] = {url: currentLinks[k], parent: Links[i][j].url};
+      queue[queue.length] = {url: currentLinks[k], parent: theLinks[i][j].url};
     }
 
   }
@@ -117,7 +117,7 @@ async function theFetch(url){
   return response
 }
 
-async function traverseQueue(pageUrls, target) {
+async function walkQueue(pageUrls, target) {
     console.log(`The pageURLs is ${util.inspect(pageUrls,false,null,true)}`);
     let currentURL = '';
     console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
@@ -129,7 +129,7 @@ async function traverseQueue(pageUrls, target) {
       console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
             // await page.goto(pageUrls[x].url).catch((err) => {}); // loading url
             let html = await theFetch(currentURL);
-            console.log('Currently Crawling :'+ pageUrls[x].url);
+            console.log('Currently Crawling: '+ pageUrls[x].url);
             // await page.waitFor(2*1000);
 
             let result = {};

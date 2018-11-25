@@ -5,16 +5,6 @@ const bfsCrawl = require('./bfsCrawl.js');
 const dfsCrawl = require('./dfsCrawl.js');
 
 
-// global variables
-let graphData = {};
-let searchQueue = [];
-let urlsScraped = [];
-let urlContent = {};
-let nodesVisited = [];
-let currentTitle;
-let pageCounter = 0;
-
-
 let main = async (options) => {
     let result;
     let data;
