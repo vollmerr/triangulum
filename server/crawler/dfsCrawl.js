@@ -43,6 +43,7 @@ async function dfsCrawl(options) {
     for(k=0;k<currentNodes.nodes.length;k++){ // pushing links present in current url
       outputNodes[outputNodes.length] = currentNodes.nodes[k]; // pushing current set of nodes visited in main nodes array
     }
+
     if(currentNodes.found == true){
       console.log('keyword Found'); // if keyword is found loop will be stopped
       break;
@@ -152,7 +153,9 @@ async function walkQueue(pageUrls, target) {
               let title = $('head > title').text();
               console.log(`Found the title - ${title}`);
               let word = $('html > body').text();
-              if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
+              if(target === ''){
+                targetFound = 0;
+              } else if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
                   targetFound = 1;
               } else {
                 targetFound = 0;

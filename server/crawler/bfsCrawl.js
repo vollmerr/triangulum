@@ -139,7 +139,9 @@ async function walkQueue(pageUrls, target) {
               let title = $('head > title').text();
               console.log(`Found the title - ${title}`);
               let word = $('html > body').text();
-              if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
+              if(target === ''){
+                targetFound = 0;
+              } else if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
                   targetFound = 1;
               } else {
                 targetFound = 0;
