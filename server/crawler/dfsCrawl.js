@@ -4,8 +4,8 @@ const urlParse = require('url');
 const util = require('util');
 util.inspect.defaultOptions.maxArrayLength = null;
 
-async function bfsCrawl(options) {
-  console.log(`In the bfsCrawl module, the options are ${util.inspect(options,false,null,true)}`);
+async function dfsCrawl(options) {
+  console.log(`In the dfsCrawl module, the options are ${util.inspect(options,false,null,true)}`);
   let url = options.url;
   let parent = '';
   const MAX_DEPTH = options.hopLimit;
@@ -14,18 +14,28 @@ async function bfsCrawl(options) {
   let theLinks = [];
   let queue = [];
   let outputNodes = [];
+  let tmp = [];
   queue.push({url,parent});
 
-  //let graphData = {};
-  //graphData = options;
+  let graphData = {};
+  graphData = options;
+
+  //let queueRandom = [];
+  //queueRandom.push({url,parent});
 
   console.log(`Entering the MAX_DEPTH while loop`);
 
   for(i=0; i<MAX_DEPTH; i++) {
     theLinks[i] = queue;
     if(i>0){
-      queue = await buildQueue(theLinks,i);
+      tmp = await buildQueue(theLinks,i);
+      console.log(`The queue in the i is ${util.inspect(tmp,false,null,true)}`);
+      queueRandom = tmp[Math.floor(Math.random()*tmp.length)]
+      console.log(`The queue random in the i is ${util.inspect(queueRandom,false,null,true)}`);
+      queue = [];
+      queue.push(queueRandom);
     }
+    //queue = queueRandom;
     console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
     currentNodes = await walkQueue(queue, target);
 
@@ -33,6 +43,7 @@ async function bfsCrawl(options) {
     for(k=0;k<currentNodes.nodes.length;k++){ // pushing links present in current url
       outputNodes[outputNodes.length] = currentNodes.nodes[k]; // pushing current set of nodes visited in main nodes array
     }
+
     if(currentNodes.found == true){
       console.log('keyword Found'); // if keyword is found loop will be stopped
       break;
@@ -118,18 +129,21 @@ async function theFetch(url){
 }
 
 async function walkQueue(pageUrls, target) {
-    console.log(`The pageURLs is ${util.inspect(pageUrls,false,null,true)}`);
+    console.log(`The pageURLs is ${util.inspect(pageUrls[0].url,false,null,true)}`);
     let currentURL = '';
     console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
     console.log(`The target is ${util.inspect(target,false,null,true)}`);
     nodes = [];
-    let urlList = pageUrls.map(a => a.url);
-    for( x in pageUrls) {
-      currentURL = urlList[x];
+    // let urlList = pageUrls.map(a => a.url);
+    // console.log(`The pageURLS url is ${pageUrls.url}`);
+    let urlList = pageUrls[0].url;
+    console.log(`The urlList is ${urlList}`);
+    //for( x in pageUrls) {
+      currentURL = urlList;
       console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
             // await page.goto(pageUrls[x].url).catch((err) => {}); // loading url
             let html = await theFetch(currentURL);
-            console.log('Currently Crawling: '+ pageUrls[x].url);
+            console.log('Currently Crawling: '+ currentURL);
             // await page.waitFor(2*1000);
 
             let result = {};
@@ -146,7 +160,7 @@ async function walkQueue(pageUrls, target) {
               } else {
                 targetFound = 0;
               }
-              result.url = pageUrls[x].url;
+              result.url = pageUrls[0].url;
               result.title = title;
               result.targetFound = targetFound;
             } catch (error) {
@@ -154,7 +168,7 @@ async function walkQueue(pageUrls, target) {
             }
 
             if(result.title){
-                result.parent = pageUrls[x].parent; // seeting the parent of current list of urls
+                result.parent = pageUrls[0].parent; // seeting the parent of current list of urls
                 nodes.push(result);
             }
             if(result.targetFound && result.targetFound == 1){ // if keyword is returning thecurrent set of nodes
@@ -163,11 +177,11 @@ async function walkQueue(pageUrls, target) {
                     found: true
                 };
             }
-    }
+    //}
     return {
         nodes: nodes,
         found: false
     };
 }
 
-module.exports = bfsCrawl;
+module.exports = dfsCrawl;

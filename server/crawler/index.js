@@ -2,16 +2,7 @@ const cheerio = require('cheerio');
 const util = require('util');
 const initialize = require('./initialize.js');
 const bfsCrawl = require('./bfsCrawl.js');
-
-
-// global variables
-let graphData = {};
-let searchQueue = [];
-let urlsScraped = [];
-let urlContent = {};
-let nodesVisited = [];
-let currentTitle;
-let pageCounter = 0;
+const dfsCrawl = require('./dfsCrawl.js');
 
 
 let main = async (options) => {
@@ -34,21 +25,19 @@ let main = async (options) => {
           // console.log(`BFS data is ${util.inspect(data,false,null,true)}`);
         });
         // console.log(`simpleBFS result is ${util.inspect(result,false,null,true)}`);
-        graphData.nodes = data;
 
     } else {
       // dfs routine
       console.log('in the dfs');
-      result = await dfs(startingData).then((value) => {
-        console.log('in the BFS');
-        // result = value;
-        console.log(`dfS value is ${util.inspect(value,false,null,true)}`);
-        console.log(`dfS result is ${util.inspect(result,false,null,true)}`);
+      result = await dfsCrawl(startingData).then((value) => {
+        console.log('in the DFS');
+        data = value;
+        // console.log(`dfS value is ${util.inspect(value,false,null,true)}`);
+        // console.log(`dfS result is ${util.inspect(result,false,null,true)}`);
       });
       console.log(`dfS result is ${util.inspect(result,false,null,true)}`);
-      console.log('finished the dfs');
     }
-  // return data;
+  graphData.nodes = data;
   return graphData;
 };
 
