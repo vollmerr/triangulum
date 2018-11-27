@@ -19,12 +19,11 @@ async function bfsCrawl(options) {
   //let graphData = {};
   //graphData = options;
 
-  /* TBD
   let maxTimeReached = false;
   let timerID = setTimeout(() => {
     maxTimeReached = true;
-  }, 20000);
-  */
+  }, 105000);
+
 
   console.log(`Entering the MAX_DEPTH while loop`);
 
@@ -54,16 +53,14 @@ async function bfsCrawl(options) {
       break;
     }
 
-    /*
     if(maxTimeReached == true){
       console.log('max search time hit'); // if keyword is found loop will be stopped
       break;
     }
-    */
 
   }
 
-  // clearTimeout(timerID);
+  clearTimeout(timerID);
 
   // graphData.nodes = outputNodes;
   let result = clean_the_nodes(outputNodes);
