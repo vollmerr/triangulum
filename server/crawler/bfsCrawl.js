@@ -19,6 +19,13 @@ async function bfsCrawl(options) {
   //let graphData = {};
   //graphData = options;
 
+  /* TBD
+  let maxTimeReached = false;
+  let timerID = setTimeout(() => {
+    maxTimeReached = true;
+  }, 20000);
+  */
+
   console.log(`Entering the MAX_DEPTH while loop`);
 
   for(i=0; i<MAX_DEPTH; i++) {
@@ -27,17 +34,37 @@ async function bfsCrawl(options) {
       queue = await buildQueue(theLinks,i);
     }
     console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
-    currentNodes = await walkQueue(queue, target);
+    currentNodes = await walkQueue(queue, target, i);
+    console.log(`The currentNodes is ${util.inspect(currentNodes,false,null,true)}`);
 
     // console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
     for(k=0;k<currentNodes.nodes.length;k++){ // pushing links present in current url
       outputNodes[outputNodes.length] = currentNodes.nodes[k]; // pushing current set of nodes visited in main nodes array
     }
+
+    if(i==0){
+      if(currentNodes.nodes[i].url==="BAD URL"){
+        console.log("Exiting due to BAD URL from the Client");
+        break;
+      }
+    }
+
     if(currentNodes.found == true){
       console.log('keyword Found'); // if keyword is found loop will be stopped
       break;
     }
+
+    /*
+    if(maxTimeReached == true){
+      console.log('max search time hit'); // if keyword is found loop will be stopped
+      break;
+    }
+    */
+
   }
+
+  // clearTimeout(timerID);
+
   // graphData.nodes = outputNodes;
   let result = clean_the_nodes(outputNodes);
   return result;
@@ -45,6 +72,7 @@ async function bfsCrawl(options) {
 
 // function clean_the_nodes puts the data in the format required
 async function clean_the_nodes(linkQ) {
+  console.log("cleaning the nodes");
   EARLS = linkQ.map(linkQ => linkQ.url);
   TITLES = linkQ.map(linkQ => linkQ.title);
   PARENTS = linkQ.map(linkQ => linkQ.parent);
@@ -79,9 +107,12 @@ async function buildQueue(theLinks, i) {
     console.log(`The url host protocol is ${url_host.protocol}`);
     console.log(`The url host hostname is ${url_host.hostname}`);
     currentURL = url_host.protocol + '//' + url_host.hostname;
-    let html = await theFetch(currentURL);
-    // let currentLinks = await getLinks(theLinks[i][j],response);
-    // let currentLinks = await getLinks(currentURL, response);
+    let html;
+    try {
+    html = await theFetch(currentURL);
+    } catch (error) {
+    console.log(error);
+    }
     let currentLinks = [];
     try {
       const $ = cheerio.load(html);
@@ -98,10 +129,12 @@ async function buildQueue(theLinks, i) {
       console.log(error);
     }
     console.log(`The currentLinks list is ${util.inspect(currentLinks,false,null,true)}`);
+    console.log("Removing duplicates");
+    currentLinks = Array.from(new Set(currentLinks))
+    console.log(`The currentLinks dedupe list is ${util.inspect(currentLinks,false,null,true)}`);
     for(k=0; k<currentLinks.length;k++){
       queue[queue.length] = {url: currentLinks[k], parent: theLinks[i][j].url};
     }
-
   }
   return queue;
 }
@@ -117,7 +150,7 @@ async function theFetch(url){
   return response
 }
 
-async function walkQueue(pageUrls, target) {
+async function walkQueue(pageUrls, target, i) {
     console.log(`The pageURLs is ${util.inspect(pageUrls,false,null,true)}`);
     let currentURL = '';
     console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
@@ -127,42 +160,59 @@ async function walkQueue(pageUrls, target) {
     for( x in pageUrls) {
       currentURL = urlList[x];
       console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
-            // await page.goto(pageUrls[x].url).catch((err) => {}); // loading url
-            let html = await theFetch(currentURL);
-            console.log('Currently Crawling: '+ pageUrls[x].url);
-            // await page.waitFor(2*1000);
+      // await page.goto(pageUrls[x].url).catch((err) => {}); // loading url
+      let html
+      try {
+      html = await theFetch(currentURL);
+      } catch (error) {
+        console.log(error);
+        if(i===0) {
+          let badResult = {};
+          badResult.url = "BAD URL";
+          badResult.parent = "";
+          badResult.title = "BAD URL";
+          badResult.targetFound = 1;
+          nodes.push(badResult)
+          return {
+              nodes: nodes,
+              found: false
+          };
+        }
+      }
+      console.log('Currently Crawling: '+ pageUrls[x].url);
+      // await page.waitFor(2*1000);
 
-            let result = {};
-            let targetFound = 0;
-            try {
-              const $ = cheerio.load(html);
-              let title = $('head > title').text();
-              console.log(`Found the title - ${title}`);
-              let word = $('html > body').text();
-              if(target === ''){
-                targetFound = 0;
-              } else if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
-                  targetFound = 1;
-              } else {
-                targetFound = 0;
-              }
-              result.url = pageUrls[x].url;
-              result.title = title;
-              result.targetFound = targetFound;
-            } catch (error) {
-              console.log(error);
-            }
+      let result = {};
+      let targetFound = 0;
+      try {
+        const $ = cheerio.load(html);
+        let title = $('head > title').text();
+        console.log(`Found the title - ${title}`);
+        let word = $('html > body').text();
+        if(target === ''){
+          targetFound = 0;
+        } else if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
+            targetFound = 1;
+        } else {
+          targetFound = 0;
+        }
+        result.url = pageUrls[x].url;
+        result.title = title;
+        result.targetFound = targetFound;
+      } catch (error) {
+        console.log(error);
+      }
 
-            if(result.title){
-                result.parent = pageUrls[x].parent; // seeting the parent of current list of urls
-                nodes.push(result);
-            }
-            if(result.targetFound && result.targetFound == 1){ // if keyword is returning thecurrent set of nodes
-                return {
-                    nodes: nodes,
-                    found: true
-                };
-            }
+      if(result.title){
+          result.parent = pageUrls[x].parent; // seeting the parent of current list of urls
+          nodes.push(result);
+      }
+      if(result.targetFound && result.targetFound == 1){ // if keyword is returning thecurrent set of nodes
+          return {
+              nodes: nodes,
+              found: true
+          };
+      }
     }
     return {
         nodes: nodes,
