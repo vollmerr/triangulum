@@ -79,9 +79,12 @@ async function buildQueue(theLinks, i) {
     console.log(`The url host protocol is ${url_host.protocol}`);
     console.log(`The url host hostname is ${url_host.hostname}`);
     currentURL = url_host.protocol + '//' + url_host.hostname;
-    let html = await theFetch(currentURL);
-    // let currentLinks = await getLinks(theLinks[i][j],response);
-    // let currentLinks = await getLinks(currentURL, response);
+    let html;
+    try {
+    html = await theFetch(currentURL);
+    } catch (error) {
+    console.log(error);
+    }
     let currentLinks = [];
     try {
       const $ = cheerio.load(html);
@@ -127,42 +130,47 @@ async function walkQueue(pageUrls, target) {
     for( x in pageUrls) {
       currentURL = urlList[x];
       console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
-            // await page.goto(pageUrls[x].url).catch((err) => {}); // loading url
-            let html = await theFetch(currentURL);
-            console.log('Currently Crawling: '+ pageUrls[x].url);
-            // await page.waitFor(2*1000);
+      // await page.goto(pageUrls[x].url).catch((err) => {}); // loading url
+      let html
+      try {
+      html = await theFetch(currentURL);
+      } catch (error) {
+        console.log(error);
+      }
+      console.log('Currently Crawling: '+ pageUrls[x].url);
+      // await page.waitFor(2*1000);
 
-            let result = {};
-            let targetFound = 0;
-            try {
-              const $ = cheerio.load(html);
-              let title = $('head > title').text();
-              console.log(`Found the title - ${title}`);
-              let word = $('html > body').text();
-              if(target === ''){
-                targetFound = 0;
-              } else if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
-                  targetFound = 1;
-              } else {
-                targetFound = 0;
-              }
-              result.url = pageUrls[x].url;
-              result.title = title;
-              result.targetFound = targetFound;
-            } catch (error) {
-              console.log(error);
-            }
+      let result = {};
+      let targetFound = 0;
+      try {
+        const $ = cheerio.load(html);
+        let title = $('head > title').text();
+        console.log(`Found the title - ${title}`);
+        let word = $('html > body').text();
+        if(target === ''){
+          targetFound = 0;
+        } else if(word.toLowerCase().indexOf(target.toLowerCase()) !== -1) {
+            targetFound = 1;
+        } else {
+          targetFound = 0;
+        }
+        result.url = pageUrls[x].url;
+        result.title = title;
+        result.targetFound = targetFound;
+      } catch (error) {
+        console.log(error);
+      }
 
-            if(result.title){
-                result.parent = pageUrls[x].parent; // seeting the parent of current list of urls
-                nodes.push(result);
-            }
-            if(result.targetFound && result.targetFound == 1){ // if keyword is returning thecurrent set of nodes
-                return {
-                    nodes: nodes,
-                    found: true
-                };
-            }
+      if(result.title){
+          result.parent = pageUrls[x].parent; // seeting the parent of current list of urls
+          nodes.push(result);
+      }
+      if(result.targetFound && result.targetFound == 1){ // if keyword is returning thecurrent set of nodes
+          return {
+              nodes: nodes,
+              found: true
+          };
+      }
     }
     return {
         nodes: nodes,
