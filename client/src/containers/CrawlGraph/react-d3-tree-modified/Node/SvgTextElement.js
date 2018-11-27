@@ -97,7 +97,7 @@ export default class SvgTextElement extends React.PureComponent {
     textLayout.x = nodeData.data.targetFound ? 28 : 14;
     return (
       <a
-        href={"http://" + nodeData.data.url}
+        href={nodeData.data.url}
         target="_blank"
         rel="noopener noreferrer"
         onMouseOver={this.handleOnMouseOver}

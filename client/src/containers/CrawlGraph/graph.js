@@ -60,7 +60,7 @@ class Graph extends React.Component {
     this.setState({
       width: String(0.8 * window.innerWidth) + 'px',
       height: String(0.7 * window.innerHeight) + 'px',
-      depthFactor: 0.175 * window.innerWidth,
+      depthFactor: 0.225 * window.innerWidth,
       translate: {x: 0.03 * window.innerWidth, y: 0.35* window.innerHeight}
     });
   }
