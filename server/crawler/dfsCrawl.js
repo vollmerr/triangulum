@@ -20,6 +20,13 @@ async function dfsCrawl(options) {
   let graphData = {};
   graphData = options;
 
+  /*
+  let maxTimeReached = false;
+  let timerID = setTimeout(() => {
+    maxTimeReached = true;
+  }, 5000);
+  */
+
   //let queueRandom = [];
   //queueRandom.push({url,parent});
 
@@ -37,18 +44,36 @@ async function dfsCrawl(options) {
     }
     //queue = queueRandom;
     console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
-    currentNodes = await walkQueue(queue, target);
+    currentNodes = await walkQueue(queue, target, i);
+    console.log(`The currentNodes is ${util.inspect(currentNodes,false,null,true)}`);
 
     // console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
     for(k=0;k<currentNodes.nodes.length;k++){ // pushing links present in current url
       outputNodes[outputNodes.length] = currentNodes.nodes[k]; // pushing current set of nodes visited in main nodes array
     }
 
+    if(i==0){
+      if(currentNodes.nodes[i].url==="BAD URL"){
+        console.log("Exiting due to BAD URL from the Client");
+        break;
+      }
+    }
+
     if(currentNodes.found == true){
       console.log('keyword Found'); // if keyword is found loop will be stopped
       break;
     }
+    /*
+    if(maxTimeReached == true){
+      console.log('max search time hit'); // if keyword is found loop will be stopped
+      break;
+    }
+    */
+
   }
+
+  // clearTimeout(timerID);
+
   // graphData.nodes = outputNodes;
   let result = clean_the_nodes(outputNodes);
   return result;
@@ -112,6 +137,9 @@ async function buildQueue(theLinks, i) {
       console.log(error);
     }
     console.log(`The currentLinks list is ${util.inspect(currentLinks,false,null,true)}`);
+    console.log("Removing duplicates");
+    currentLinks = Array.from(new Set(currentLinks))
+    console.log(`The currentLinks dedupe list is ${util.inspect(currentLinks,false,null,true)}`);
     for(k=0; k<currentLinks.length;k++){
       queue[queue.length] = {url: currentLinks[k], parent: theLinks[i][j].url};
     }
@@ -131,7 +159,7 @@ async function theFetch(url){
   return response
 }
 
-async function walkQueue(pageUrls, target) {
+async function walkQueue(pageUrls, target, i) {
     console.log(`The pageURLs is ${util.inspect(pageUrls[0].url,false,null,true)}`);
     let currentURL = '';
     console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
@@ -150,6 +178,20 @@ async function walkQueue(pageUrls, target) {
       html = await theFetch(currentURL);
     } catch (error) {
       console.log(error);
+      if(i===0) {
+        let badResult = {};
+        badResult.url = "BAD URL";
+        badResult.parent = "";
+        badResult.title = "BAD URL";
+        badResult.targetFound = 1;
+        nodes.push(badResult)
+        console.log("Before the return");
+        return {
+            nodes: nodes,
+            found: false
+        };
+        console.log("After the return");
+      }
     }
     console.log('Currently Crawling: '+ currentURL);
     // await page.waitFor(2*1000);
