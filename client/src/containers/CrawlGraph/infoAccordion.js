@@ -38,7 +38,8 @@ export default class InfoAccordion extends Component {
             Click the node label to open the site in a new tab. Mouse over label to show url and expand (if applicable).<br />
             Zoom with scrolling. Drag with mouse to pan.<br />
             For targeted searches, green nodes are sites along the target path. 
-            The large, red node is the site with the keyword.
+            The large, red node is the site with the keyword.<br />
+            If the node label is covered, please collapse the node to view the full label.
           </p>
           <div
             style={{height: '1px'}}
