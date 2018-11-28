@@ -15,8 +15,8 @@ const initialize = async (options) => {
 // end prepend
 
 //set bfs limit to a max of 3.
-    if(data_set.type === 'bfs' && data_set.hopLimit > 3) {
-      data_set.hopLimit = 3;
+    if(data_set.type === 'bfs' && data_set.hopLimit > 10) {
+      data_set.hopLimit = 10;
     }
 
 // set dfs limit to a max of 10.
