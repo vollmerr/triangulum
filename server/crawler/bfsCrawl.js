@@ -4,7 +4,13 @@ const urlParse = require('url');
 const util = require('util');
 util.inspect.defaultOptions.maxArrayLength = null;
 
-async function bfsCrawl(options) {
+// ADDED ---------------------------------------
+let maxTimeReached = false;
+let timerID = setTimeout(() => {
+    maxTimeReached = true;
+  }, 105000);
+
+async function bfsCrawl(options,graphData) {
   console.log(`In the bfsCrawl module, the options are ${util.inspect(options,false,null,true)}`);
   let url = options.url;
   let parent = '';
@@ -16,18 +22,12 @@ async function bfsCrawl(options) {
   let outputNodes = [];
   queue.push({url,parent});
 
-  //let graphData = {};
-  //graphData = options;
-
-  let maxTimeReached = false;
-  let timerID = setTimeout(() => {
-    maxTimeReached = true;
-  }, 105000);
-
+  graphData.isTimedOut = maxTimeReached;
 
   console.log(`Entering the MAX_DEPTH while loop`);
 
   for(i=0; i<MAX_DEPTH; i++) {
+
     theLinks[i] = queue;
     if(i>0){
       queue = await buildQueue(theLinks,i);
@@ -53,17 +53,21 @@ async function bfsCrawl(options) {
       break;
     }
 
+    //added
     if(maxTimeReached == true){
       console.log('max search time hit'); // if keyword is found loop will be stopped
+      graphData.isTimedOut = maxTimeReached;
       break;
     }
 
   }
 
+  //added
   clearTimeout(timerID);
 
   // graphData.nodes = outputNodes;
   let result = clean_the_nodes(outputNodes);
+
   return result;
 }
 
@@ -104,6 +108,10 @@ async function buildQueue(theLinks, i) {
     console.log(`The url host protocol is ${url_host.protocol}`);
     console.log(`The url host hostname is ${url_host.hostname}`);
     currentURL = url_host.protocol + '//' + url_host.hostname;
+    currentURL = url_host;
+
+    // console.log(`The url host port # is ${url_host.port}`);
+    // currentURL = url_host.protocol + '//' + url_host.hostname + ":" + url_host.port;
     let html;
     try {
     html = await theFetch(currentURL);
@@ -131,6 +139,11 @@ async function buildQueue(theLinks, i) {
     console.log(`The currentLinks dedupe list is ${util.inspect(currentLinks,false,null,true)}`);
     for(k=0; k<currentLinks.length;k++){
       queue[queue.length] = {url: currentLinks[k], parent: theLinks[i][j].url};
+    }
+    // ADDED -----------------------------------------
+    if(maxTimeReached == true){
+      console.log('max search time hit'); // if keyword is found loop will be stopped
+      break;
     }
   }
   return queue;
@@ -210,6 +223,12 @@ async function walkQueue(pageUrls, target, i) {
               found: true
           };
       }
+      // ADDED ----------------------------------------------------------
+      if(maxTimeReached == true){
+          console.log('max search time hit'); // if keyword is found loop will be stopped
+          break;
+      }
+
     }
     return {
         nodes: nodes,

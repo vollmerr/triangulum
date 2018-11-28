@@ -4,7 +4,13 @@ const urlParse = require('url');
 const util = require('util');
 util.inspect.defaultOptions.maxArrayLength = null;
 
-async function dfsCrawl(options) {
+// ADDED ---------------------------------------
+let maxTimeReached = false;
+let timerID = setTimeout(() => {
+    maxTimeReached = true;
+  }, 105000);
+
+async function dfsCrawl(options, graphData) {
   console.log(`In the dfsCrawl module, the options are ${util.inspect(options,false,null,true)}`);
   let url = options.url;
   let parent = '';
@@ -17,15 +23,9 @@ async function dfsCrawl(options) {
   let tmp = [];
   queue.push({url,parent});
 
-  let graphData = {};
-  graphData = options;
-
-  /*
-  let maxTimeReached = false;
-  let timerID = setTimeout(() => {
-    maxTimeReached = true;
-  }, 5000);
-  */
+  graphData.isTimedOut = maxTimeReached;
+  //let graphData = {};
+  //graphData = options;
 
   //let queueRandom = [];
   //queueRandom.push({url,parent});
@@ -47,7 +47,6 @@ async function dfsCrawl(options) {
     currentNodes = await walkQueue(queue, target, i);
     console.log(`The currentNodes is ${util.inspect(currentNodes,false,null,true)}`);
 
-    // console.log(`The queue is ${util.inspect(queue,false,null,true)}`);
     for(k=0;k<currentNodes.nodes.length;k++){ // pushing links present in current url
       outputNodes[outputNodes.length] = currentNodes.nodes[k]; // pushing current set of nodes visited in main nodes array
     }
@@ -63,16 +62,16 @@ async function dfsCrawl(options) {
       console.log('keyword Found'); // if keyword is found loop will be stopped
       break;
     }
-    /*
+
     if(maxTimeReached == true){
       console.log('max search time hit'); // if keyword is found loop will be stopped
+      graphData.isTimedOut = maxTimeReached;
       break;
     }
-    */
 
   }
 
-  // clearTimeout(timerID);
+  clearTimeout(timerID);
 
   // graphData.nodes = outputNodes;
   let result = clean_the_nodes(outputNodes);
@@ -142,6 +141,12 @@ async function buildQueue(theLinks, i) {
     console.log(`The currentLinks dedupe list is ${util.inspect(currentLinks,false,null,true)}`);
     for(k=0; k<currentLinks.length;k++){
       queue[queue.length] = {url: currentLinks[k], parent: theLinks[i][j].url};
+    }
+
+    // ADDED -----------------------------------------
+    if(maxTimeReached == true){
+      console.log('max search time hit'); // if keyword is found loop will be stopped
+      break;
     }
 
   }
@@ -227,7 +232,13 @@ async function walkQueue(pageUrls, target, i) {
             found: true
         };
     }
-    //}
+
+    // ADDED ----------------------------------------------------------
+    if(maxTimeReached == true){
+        console.log('max search time hit'); // if keyword is found loop will be stopped
+        //break;
+    }
+
     return {
         nodes: nodes,
         found: false

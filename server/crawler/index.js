@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const util = require('util');
+const {performance} = require('perf_hooks');
 const initialize = require('./initialize.js');
 const bfsCrawl = require('./bfsCrawl.js');
 const dfsCrawl = require('./dfsCrawl.js');
@@ -18,18 +19,17 @@ let main = async (options) => {
     if(startingData.type === 'bfs') {
       // bfs routine
         console.log('in the bfs');
-        let result = await bfsCrawl(startingData).then((value) => {
+        let result = await bfsCrawl(startingData, graphData).then((value) => {
           console.log('in the BFS');
           data = value;
           // console.log(`BFS value is ${util.inspect(value,false,null,true)}`);
           // console.log(`BFS data is ${util.inspect(data,false,null,true)}`);
         });
-        // console.log(`simpleBFS result is ${util.inspect(result,false,null,true)}`);
 
     } else {
       // dfs routine
       console.log('in the dfs');
-      result = await dfsCrawl(startingData).then((value) => {
+      result = await dfsCrawl(startingData, graphData).then((value) => {
         console.log('in the DFS');
         data = value;
         // console.log(`dfS value is ${util.inspect(value,false,null,true)}`);
@@ -37,17 +37,23 @@ let main = async (options) => {
       });
       console.log(`dfS result is ${util.inspect(result,false,null,true)}`);
     }
-  graphData.nodes = data;
-  return graphData;
+
+    graphData.nodes = data;
+    return graphData;
 };
 
 process.on('message', async (options) => {
   console.log('in the process');
   try {
+    let t0 = performance.now();
     console.log(`Looking at the options in the process ${options}`);
     const result = await main(options);
     console.log(`The result is ${util.inspect(result,false,null,true)}`);
     console.log('finished crawl');
+    let t1 = performance.now();
+    console.log(`The crawl took ${t1-t0} milliseconds`);
+    let tSeconds = (t1-t0)/1000;
+    console.log(`The crawl took ${tSeconds} seconds`);
     process.send(result);
     console.log('sent results');
   } catch (err) {
