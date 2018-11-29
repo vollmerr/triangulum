@@ -38,7 +38,7 @@ Cypress.Commands.add('getCrawl', (body) => {
   const request = {
     url: testUrl,
     type: 'bfs',
-    limit: 1,
+    limit: 3,
     keyword: 'test',
     ...body,
   };
@@ -53,8 +53,8 @@ Cypress.Commands.add('getCrawl', (body) => {
   })
   .then(res => ({
     request,
-    response: JSON.parse(res.body),
+    response: res.body,
     created: new Date('1969-01-01'),
     updated: new Date('3000-08-22'),
   }));
-})
+});

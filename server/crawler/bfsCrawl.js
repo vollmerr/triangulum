@@ -1,10 +1,10 @@
+/* eslint-disable */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const urlParse = require('url');
 const util = require('util');
 util.inspect.defaultOptions.maxArrayLength = null;
 
-// ADDED ---------------------------------------
 let maxTimeReached = false;
 let timerID = setTimeout(() => {
     maxTimeReached = true;
@@ -107,7 +107,6 @@ async function buildQueue(theLinks, i) {
     let url_host = urlParse.parse(theLinks[i][j].url, true);
     console.log(`The url host protocol is ${url_host.protocol}`);
     console.log(`The url host hostname is ${url_host.hostname}`);
-    currentURL = url_host.protocol + '//' + url_host.hostname;
     currentURL = url_host;
 
     // console.log(`The url host port # is ${url_host.port}`);
@@ -148,16 +147,19 @@ async function buildQueue(theLinks, i) {
   }
   return queue;
 }
+
 async function theFetch(url){
-  // console.log("Fetching with node-fetch");
-  // console.log(`The currentURL is ${url}`);
-  // console.log(`The currentURL is ${util.inspect(url,false,null,true)}`);
-  response = await fetch(url)
-    .then(response => response.text())
-    .then(body => {
-      return body;
-    });
-  return response
+  try {
+    const response = await fetch(url);
+    // only process text/html files...
+    if (response.headers.get('content-type').match(/text\/html/)) {
+      return response.text();
+    }
+    // skip others such as zip, etc
+    return null;
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function walkQueue(pageUrls, target, i) {
@@ -165,15 +167,15 @@ async function walkQueue(pageUrls, target, i) {
     let currentURL = '';
     console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
     console.log(`The target is ${util.inspect(target,false,null,true)}`);
-    nodes = [];
+    let nodes = [];
+    let html;
     let urlList = pageUrls.map(a => a.url);
-    for( x in pageUrls) {
+    for(let x in pageUrls) {
       currentURL = urlList[x];
       console.log(`The currentURL is ${util.inspect(currentURL,false,null,true)}`);
-      // await page.goto(pageUrls[x].url).catch((err) => {}); // loading url
-      let html
+
       try {
-      html = await theFetch(currentURL);
+        html = await theFetch(currentURL);
       } catch (error) {
         console.log(error);
         if(i===0) {
@@ -190,7 +192,6 @@ async function walkQueue(pageUrls, target, i) {
         }
       }
       console.log('Currently Crawling: '+ pageUrls[x].url);
-      // await page.waitFor(2*1000);
 
       let result = {};
       let targetFound = 0;

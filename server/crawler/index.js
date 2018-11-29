@@ -1,3 +1,4 @@
+/* eslint-disable */
 const cheerio = require('cheerio');
 const util = require('util');
 const {performance} = require('perf_hooks');
@@ -5,6 +6,8 @@ const initialize = require('./initialize.js');
 const bfsCrawl = require('./bfsCrawl.js');
 const dfsCrawl = require('./dfsCrawl.js');
 
+// comment out to display logging...
+console.log = () => {};
 
 let main = async (options) => {
     let result;

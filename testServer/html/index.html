@@ -10,13 +10,14 @@
   <h1>Page 1 Header</h1>
   <p>other stuff on page...</p>
   <img src="https://via.placeholder.com/728x90.png?text=This+Should+Not+Render" title="unrendered image"/>
-  <a href="/page2_a.html" id="page2a">link to 2 a</a>
+  <a href="http://localhost:9119/page2_a.html" id="page2a">link to 2 a</a>
   <a href="#" id="page2b">link to 2 b (dynamically populated)</a>
-  <a href="#" id="page1">link to hash</a>
-  <a href="/bad-link.html" id="page1">bad link</a>
+  <a href="#" id="hashLink">link to hash</a>
+  <a href="/page3.html" id="relativeLink">relative link</a>
+  <!-- <a href="http://localhost:9119/bad-link.html" id="badLink">bad link</a> -->
   <script>
     document.getElementById('page2b').addEventListener('onClick', () => {
-      window.location.href = '/page2b.html';
+      window.location.href = 'http://localhost:9119/page2b.html';
     });
   </script>
 </body>
