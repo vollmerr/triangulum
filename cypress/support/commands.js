@@ -24,6 +24,13 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+const host = Cypress.env('wsUrl');
+let ws = new WebSocket(host); // eslint-disable-line
+ws.init = () => {
+  ws = new WebSocket(host);
+};
+ws.onclose = ws.init;
+
 Cypress.Commands.add('selectOption', (dataCy, text) => {
   return cy.get(dataCy)
     .first()
@@ -43,18 +50,23 @@ Cypress.Commands.add('getCrawl', (body) => {
     ...body,
   };
 
-  return cy.request({
-    url: '/api/crawl',
-    method: 'POST',
-    body: JSON.stringify(request),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  .then(res => ({
-    request,
-    response: res.body,
-    created: new Date('1969-01-01'),
-    updated: new Date('3000-08-22'),
-  }));
+  let resolve;
+  const getData = new Promise((res, rej) => {
+    resolve = res;
+  });
+
+  ws.onmessage = (msg) => {
+    const data = {
+      request,
+      response: JSON.parse(msg.data),
+      created: new Date('1969-01-01'),
+      updated: new Date('3000-08-22'),
+    };
+
+    resolve(data);
+  }
+
+  ws.send(JSON.stringify(request));
+
+  return getData;
 });

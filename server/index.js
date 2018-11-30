@@ -48,16 +48,20 @@ server.ready((err) => {
         crawler = cp.fork(path.join(__dirname, '/crawler/index.js'));
         crawler.send(JSON.parse(msg));
         crawler.on('message', (result) => {
-          if (result.error) {
-            server.log.error(result.error);
-            throw result.error;
+          try {
+            if (result.error) {
+              throw result.error;
+            }
+            ws.send(JSON.stringify(result));
+          } catch (crawlError) {
+            server.log.error(crawlError);
+          } finally {
+            if (crawler) crawler.kill();
           }
-          ws.send(JSON.stringify(result));
-          if (crawler) crawler.kill();
         });
-      } catch (error) {
-        server.log.error(error);
-        ws.send(error);
+      } catch (wsError) {
+        server.log.error(wsError);
+        ws.send(wsError);
         if (crawler) crawler.kill();
       }
     });
