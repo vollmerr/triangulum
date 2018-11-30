@@ -3,12 +3,18 @@ const cp = require('child_process');
 const fastify = require('fastify');
 const fastifyStatic = require('fastify-static');
 const fastifyCors = require('fastify-cors');
+const fastifyWs = require('fastify-ws');
 
 const server = fastify({ logger: true });
 
 // setup plugins
 server.register(fastifyStatic, { root: path.join(__dirname, '../client/build') });
 server.register(fastifyCors);
+server.register(fastifyWs);
+
+/** ******************************
+ *  HTTP SERVER
+ ** ****************************** */
 
 // serve client file
 server.get('/', (request, reply) => reply.sendFile('index.html'));
@@ -16,26 +22,58 @@ server.get('/', (request, reply) => reply.sendFile('index.html'));
 // health check for making sure still running
 server.get('/api/healthcheck', (request, reply) => reply.send(200));
 
-// Spawns new crawler fork to handle long process of crawling sites
-server.post('/api/crawl', (request, reply) => {
-  let crawler;
-  try {
-    crawler = cp.fork(path.join(__dirname, '/crawler/index.js'));
-    crawler.send(request.body);
-    crawler.on('message', (result) => {
-      if (result.error) {
-        server.log.error(result.error);
-        reply.code(500);
+/** ******************************
+ *  WEB SOCKET SERVER
+ ** ****************************** */
+function noop() {}
+
+function heartbeat() {
+  this.isAlive = true;
+}
+
+server.ready((err) => {
+  if (err) throw err;
+  server.log.info('server started');
+
+  server.ws.on('connection', (ws) => {
+    server.log.info('Client connected.');
+    ws.isAlive = true; // eslint-disable-line
+    // keep alive with ping pongs
+    ws.on('pong', heartbeat);
+    // recieved a request to crawl
+    ws.on('message', (msg) => {
+      server.log.info('Message recieved');
+      let crawler;
+      try {
+        crawler = cp.fork(path.join(__dirname, '/crawler/index.js'));
+        crawler.send(JSON.parse(msg));
+        crawler.on('message', (result) => {
+          if (result.error) {
+            server.log.error(result.error);
+            throw result.error;
+          }
+          ws.send(JSON.stringify(result));
+          if (crawler) crawler.kill();
+        });
+      } catch (error) {
+        server.log.error(error);
+        ws.send(error);
+        if (crawler) crawler.kill();
       }
-      reply.send(result);
-      crawler.kill();
     });
-  } catch (err) {
-    if (crawler) crawler.kill();
-    server.log.error(err);
-    reply.code(500).send(err);
-  }
+    // close out connection
+    ws.on('close', () => server.log.info('Client disconnected.'));
+  });
 });
+
+// ping clients to make sure still alive
+setInterval(() => {
+  server.ws.clients.forEach((ws) => {
+    if (ws.isAlive === false) return ws.terminate();
+    ws.isAlive = false; // eslint-disable-line
+    return ws.ping(noop);
+  });
+}, 30000);
 
 server.start = async () => {
   try {
