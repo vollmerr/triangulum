@@ -1,6 +1,7 @@
 import React from 'react';
-import { List, Header } from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
 
+import EmptyMessage from '../../components/Message/EmptyMessage';
 import HistoryItem from './HistoryItem';
 
 const HistoryItems = ({ items, onClick }) => {
@@ -8,16 +9,8 @@ const HistoryItems = ({ items, onClick }) => {
 
   // No history message
   if (!keys.length) {
-    const props = {
-      as: 'h3',
-      textAlign: 'center',
-      color: 'violet',
-      content: 'No History :(',
-      style: { padding: '50px 0' },
-    };
-
     return (
-      <Header {...props} />
+      <EmptyMessage message={'No History :('} />
     );
   }
 

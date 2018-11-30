@@ -5,7 +5,7 @@ import * as yup from 'yup';
 export const validationSchema = yup.object().shape({
   url: yup.string().required('Starting URL is Required'),
   type: yup.string().required('Search Type is Required'),
-  limit: yup.number().required('Limit is Required'),
+  limit: yup.number().max(10).required('Limit is Required'),
   keyword: yup.string(),
 });
 

@@ -7,7 +7,7 @@ const bfsCrawl = require('./bfsCrawl.js');
 const dfsCrawl = require('./dfsCrawl.js');
 
 // comment out to display logging...
-console.log = () => {};
+// console.log = () => {};
 
 let main = async (options) => {
     let result;
