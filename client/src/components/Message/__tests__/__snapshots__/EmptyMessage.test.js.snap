@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyMessage should render correctly 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "justifyContent": "center",
+      "marginTop": "-10vh",
+      "minHeight": "100vh",
+      "textAlign": "center",
+    }
+  }
+>
+  <Header
+    as="h3"
+    color="violet"
+    content="test message"
+    style={
+      Object {
+        "padding": "20px 0",
+      }
+    }
+    textAlign="center"
+  />
+  <Button
+    as="button"
+    color="violet"
+    content="New Crawl"
+    icon="plus"
+    onClick={[Function]}
+    role="button"
+    type="button"
+  />
+</div>
+`;

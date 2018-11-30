@@ -153,15 +153,17 @@ async function buildQueue(theLinks, i) {
   return queue;
 }
 async function theFetch(url){
-  // console.log("Fetching with node-fetch");
-  // console.log(`The currentURL is ${url}`);
-  // console.log(`The currentURL is ${util.inspect(url,false,null,true)}`);
-  response = await fetch(url)
-    .then(response => response.text())
-    .then(body => {
-      return body;
-    });
-  return response
+  try {
+    const response = await fetch(url);
+    // only process text/html files...
+    if (response.headers.get('content-type').match(/text\/html/)) {
+      return response.text();
+    }
+    // skip others such as zip, etc
+    return null;
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function walkQueue(pageUrls, target, i) {
