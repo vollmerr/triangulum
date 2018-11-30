@@ -18,7 +18,7 @@ export const mapPropsToValues = () => ({
 });
 
 // handles submitting the form, updates data in parent container
-export const handleSubmit = async (values, bag) => {
+export const handleSubmit = (values, bag) => {
   bag.props.handleSubmit({ values, bag });
 };
 
