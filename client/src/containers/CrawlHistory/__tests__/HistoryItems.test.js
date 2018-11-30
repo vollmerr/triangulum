@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Header } from 'semantic-ui-react';
 
+import EmptyMessage from '../../../components/Message/EmptyMessage';
 import HistoryItem from '../HistoryItem';
 import HistoryItems from '../HistoryItems';
 
@@ -29,6 +30,6 @@ describe('HistoryItem', () => {
 
   it('should render a message if no history', () => {
     wrapper.setProps({ items: {} });
-    expect(wrapper.find(Header).length).toEqual(1);
+    expect(wrapper.find(EmptyMessage).length).toEqual(1);
   });
 });
