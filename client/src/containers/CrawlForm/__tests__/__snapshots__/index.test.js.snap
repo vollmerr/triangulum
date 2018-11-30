@@ -2,8 +2,6 @@
 
 exports[`CrawlForm render should render correctly 1`] = `
 <WithFormik(FormikForm)
-  onFailure={[Function]}
-  onRequest={[Function]}
-  onSuccess={[Function]}
+  handleSubmit={[Function]}
 />
 `;

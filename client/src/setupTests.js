@@ -3,7 +3,6 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import MockDate from 'mockdate';
 
-
 configure({ adapter: new Adapter() });
 // hard code dates (snapshots...)
 MockDate.set('1/1/2000');
@@ -14,3 +13,5 @@ jest.mock('uuid/v4', () => {
   faker.seed(1337);
   return () => faker.random.uuid();
 });
+
+jest.mock('./utils/socket');
