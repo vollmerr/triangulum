@@ -2,10 +2,12 @@ import React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 
 import * as historyStorage from '../../utils/historyStorage';
-
 import routes from './routes';
 import MobileContainer from './MobileContainer';
 import DesktopContainer from './DesktopContainer';
+
+// load our websocket
+import '../../utils/socket';
 
 /**
  * main application container that handles:
