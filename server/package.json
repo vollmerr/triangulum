@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "cheerio": "1.0.0-rc.2",
+    "event-stream": "3.3.4",
     "fastify": "1.12.1",
     "fastify-cors": "0.1.0",
     "fastify-static": "0.14.0",
